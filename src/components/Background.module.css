@@ -1,0 +1,22 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* MicroSlats has no opacity prop, so the layer dims it into an ambient wash.
+   The field is dense, so it needs much less ink than the dots to read as texture. */
+.slats {
+  opacity: 0.24;
+}
+
+:root[data-theme='light'] .slats {
+  opacity: 0.15;
+}
+
+@media (max-width: 640px) {
+  .slats {
+    opacity: 0.11;
+  }
+}

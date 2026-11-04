@@ -1,0 +1,68 @@
+/**
+ * Profile content. Anything marked TODO needs a real value from Kylle.
+ */
+
+// Imported rather than referenced from public/ so Vite fingerprints the file and
+// rewrites the URL for the configured base — the same import works at a domain
+// root, in a subpath, and on a static host after `npm run build`.
+import photo from '../assets/images/Kylle.jpg';
+
+export const profile = {
+  name: 'Kylle Ian Acibron',
+  photo,
+  photoAlt: 'Portrait of Kylle Ian Acibron, wearing glasses and a dark hooded jacket',
+  role: 'Full-stack developer in training',
+  headline: 'I build web systems that turn paper records into working software.',
+  // Rendered in the accent colour inside the headline.
+  headlineAccent: 'working software',
+  availability: 'Open to internships and junior developer roles',
+
+  facebookUrl: 'https://www.facebook.com/kylle.Acibron15',
+  instagramUrl: 'https://www.instagram.com/kaiiiii_ruuu/',
+
+  // TODO: add your résumé PDF to public/ (for example public/resume.pdf)
+  // and set this to '/resume.pdf'. The buttons stay disabled until then.
+  resumeUrl: '',
+
+  email: 'kylleacibron@gmail.com',
+  location: 'Bayawan City, Negros Oriental, Philippines',
+  university: 'Negros Oriental State University — Bayawan-Sta. Catalina Campus',
+
+  github: {
+    handle: 'kairu15',
+    url: 'https://github.com/kairu15',
+  },
+
+  focus: ['Web systems', 'Geo-mapping', 'Django & React'],
+
+  // `**text**` marks inline emphasis; About.jsx renders it as <strong>.
+  bio: [
+    "I'm Kylle Ian, an aspiring full-stack developer based in Bayawan City, Negros Oriental, Philippines, and currently pursuing a Bachelor of Science in Information Technology at Negros Oriental State University – Bayawan–Sta. Catalina Campus (NORSU-BSC).",
+    "My journey in technology started with a curiosity about how websites, applications, and information systems work behind the scenes. What began as an interest in programming gradually grew into a passion for building digital solutions that solve real-world problems. Through my academic journey, personal projects, and hands-on experience, I've continued to explore different technologies, strengthen my technical foundation, and develop a deeper understanding of software development.",
+    'I work primarily with **Laravel, PHP, Django, Python, JavaScript, and MySQL**, building web applications ranging from community-based platforms and university information systems to business management tools. I enjoy working on both the frontend and backend, from designing clean and responsive user interfaces to developing database structures, implementing application logic, and making sure everything works together seamlessly.',
+    "I'm particularly interested in developing systems that make everyday tasks easier, improve information management, and provide practical solutions for the people who use them. I enjoy working on projects where accuracy, organization, and reliability matter—especially systems designed for communities, educational institutions, and organizations where users need accessible and dependable tools, even when their work takes them beyond a traditional office environment.",
+    "Beyond writing code, I value the process of understanding a problem before building a solution. I believe good software is not simply about adding features or using the latest technologies. It's about creating something useful, maintaining readable and manageable code, paying attention to the smallest details, and making sure the final product serves its intended purpose.",
+    "As an IT student, I recognize that learning is a continuous process. Every project gives me an opportunity to experiment, make mistakes, improve my approach, and discover better ways to develop applications. I'm always interested in exploring new technologies, improving my problem-solving abilities, and expanding my knowledge of modern web development.",
+    'My goal is to continue growing as a developer, gain more real-world experience, and contribute to projects that have a meaningful impact. I prefer building practical solutions that work reliably over creating something complicated just for the sake of complexity. For me, every line of code is another opportunity to learn, improve, and turn an idea into something useful.',
+    "**I'm still learning, still building, and always looking for new challenges that push me to become a better developer.**",
+  ],
+
+  socials: [
+    { id: 'github', label: 'GitHub', href: 'https://github.com/kairu15' },
+    { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/kylle.Acibron15' },
+    { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/kaiiiii_ruuu/' },
+    { id: 'email', label: 'Email', href: 'mailto:kylleacibron@gmail.com' },
+  ],
+};
+
+/**
+ * Developer activity card. Repository count and join year were read from the
+ * GitHub API when this site was built — update them if they get stale.
+ */
+export const activity = {
+  repoCount: 6,
+  joinedYear: 2024,
+  // Public, no-key contribution chart. Replaced by a text fallback on error.
+  chartUrl: 'https://ghchart.rshah.org/kairu15',
+  chartAlt: 'Contribution graph for the GitHub account kairu15',
+};

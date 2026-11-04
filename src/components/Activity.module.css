@@ -1,0 +1,96 @@
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.2rem 1.3rem;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-soft);
+  color: var(--text);
+}
+
+.handle {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.stats {
+  margin-top: 0.15rem;
+  color: var(--text-mute);
+  font-size: 0.82rem;
+}
+
+.profileLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: auto;
+  min-height: 40px;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    border-color var(--t-fast),
+    background-color var(--t-fast),
+    color var(--t-fast);
+}
+
+.profileLink:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.chartWrap {
+  padding: 1.1rem 1.3rem 1.35rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg-soft);
+  overflow-x: auto;
+}
+
+.chart {
+  width: 100%;
+  min-width: 480px;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+.fallback {
+  color: var(--text-soft);
+  font-size: 0.86rem;
+}
+
+.fallback a {
+  color: var(--accent);
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 559px) {
+  .profileLink {
+    margin-left: 0;
+  }
+}

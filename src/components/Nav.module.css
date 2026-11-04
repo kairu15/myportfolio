@@ -1,0 +1,264 @@
+/* Icon-only vertical sidebar. Fixed on desktop; a slide-in drawer under 900px. */
+
+.rail {
+  --rail-item: clamp(38px, 6vh, 44px);
+
+  position: fixed;
+  inset-block: 0;
+  left: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.5rem, 1.6vh, 0.9rem);
+  width: var(--rail-width);
+  padding-block: clamp(0.6rem, 2vh, 1.1rem);
+  padding-inline: 0.5rem;
+  border-right: 1px solid var(--border);
+  background: var(--nav-bg);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  transition:
+    background-color var(--t),
+    border-color var(--t);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rail {
+    animation: rail-in 260ms var(--ease);
+  }
+}
+
+@keyframes rail-in {
+  from {
+    opacity: 0.4;
+    transform: translateX(-100%);
+  }
+}
+
+.brand {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: calc(var(--rail-item) - 4px);
+  height: calc(var(--rail-item) - 4px);
+  border-radius: 50%;
+  text-decoration: none;
+  transition: transform var(--t-fast);
+}
+
+.brand:hover {
+  transform: translateY(-1px);
+}
+
+.mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background: var(--bg-soft);
+  box-shadow: 0 0 0 3px transparent;
+  transition: box-shadow var(--t-fast), border-color var(--t-fast);
+}
+
+.brand:hover .mark,
+.brand:focus-visible .mark {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(2px, 0.7vh, 5px);
+  margin-block: auto;
+}
+
+.link {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--rail-item);
+  height: var(--rail-item);
+  border-radius: 12px;
+  color: var(--text-mute);
+  text-decoration: none;
+  transition:
+    color var(--t-fast),
+    background-color var(--t-fast),
+    transform var(--t-fast);
+}
+
+.link:hover {
+  color: var(--text);
+  background: var(--bg-soft);
+  transform: translateX(1px);
+}
+
+.linkActive,
+.linkActive:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* Accent bar marking the section in view. */
+.linkActive::before {
+  content: '';
+  position: absolute;
+  left: -0.55rem;
+  top: 50%;
+  width: 3px;
+  height: 18px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  transform: translateY(-50%);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(2px, 0.8vh, 0.4rem);
+  width: 100%;
+  padding-top: clamp(0.4rem, 1.4vh, 0.75rem);
+  border-top: 1px solid var(--border);
+}
+
+.control {
+  position: relative;
+  width: var(--rail-item);
+  height: var(--rail-item);
+  border-color: transparent;
+  border-radius: 12px;
+  background: transparent;
+}
+
+.control:hover {
+  border-color: var(--border);
+  background: var(--bg-soft);
+}
+
+.controlActive {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* Tooltips: shown on hover and keyboard focus, hidden on touch screens. */
+.link::after,
+.brand::after,
+.control::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  z-index: 5;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg-elev);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-4px, -50%);
+  transition:
+    opacity var(--t-fast),
+    transform var(--t-fast);
+}
+
+.link:hover::after,
+.link:focus-visible::after,
+.brand:hover::after,
+.brand:focus-visible::after,
+.control:hover::after,
+.control:focus-visible::after {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+@media (hover: none) {
+  .link::after,
+  .brand::after,
+  .control::after {
+    display: none;
+  }
+}
+
+/* Button shown whenever the rail is collapsed. */
+.opener {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+  color: var(--text-soft);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition:
+    color var(--t-fast),
+    border-color var(--t-fast),
+    background-color var(--t-fast),
+    transform var(--t-fast);
+}
+
+.opener:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-1px);
+}
+
+/* Mobile drawer backdrop. */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  padding: 0;
+  border: 0;
+  background: rgb(0 0 0 / 35%);
+  cursor: pointer;
+}
+
+/* Drawer: opaque so page content never shows through the icons. */
+@media (max-width: 899px) {
+  .rail {
+    background: var(--bg-elev);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+@media (min-width: 900px) {
+  .scrim {
+    display: none;
+  }
+
+  .opener {
+    left: 12px;
+    right: auto;
+  }
+}

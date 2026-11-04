@@ -1,0 +1,71 @@
+.section {
+  padding-block: var(--section-space);
+  position: relative;
+}
+
+.head {
+  max-width: 58ch;
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.index {
+  color: var(--text-mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  font-size: clamp(1.65rem, 3.6vw, 2.35rem);
+  color: var(--text);
+  text-wrap: balance;
+}
+
+.description {
+  margin-top: 0.85rem;
+  color: var(--text-soft);
+  font-size: clamp(0.98rem, 1.4vw, 1.06rem);
+}
+
+/* Optional side column (used by Contact): heading left, content right. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.75rem;
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.split .head {
+  max-width: 34ch;
+  margin-bottom: 0;
+}
+
+@media (min-width: 860px) {
+  .split {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .section {
+    transition: opacity 650ms var(--ease), transform 650ms var(--ease);
+  }
+
+  .section:not(.visible) {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}

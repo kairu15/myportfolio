@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-accent="indigo" data-backdrop="waves">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Kylle Ian Acibron — Full-stack developer in training</title>
+    <meta
+      name="description"
+      content="Kylle Ian Acibron is an Information Technology student and full-stack developer in Negros Oriental, Philippines, building web systems with Laravel, Django, React and MySQL."
+    />
+    <meta name="author" content="Kylle Ian Acibron" />
+    <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0c0f14" media="(prefers-color-scheme: dark)" />
+
+    <!-- Default Render URL from render.yaml. Update here, in og:url and in the
+         JSON-LD below if you rename the service or add a custom domain. -->
+    <link rel="canonical" href="https://kylle-portfolio.onrender.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kylle Ian Acibron" />
+    <meta property="og:title" content="Kylle Ian Acibron — Full-stack developer in training" />
+    <meta
+      property="og:description"
+      content="IT student and full-stack developer in Negros Oriental, Philippines. I build web systems that turn paper records into working software."
+    />
+    <meta property="og:url" content="https://kylle-portfolio.onrender.com/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kylle Ian Acibron — Full-stack developer in training" />
+    <meta
+      name="twitter:description"
+      content="IT student and full-stack developer in Negros Oriental, Philippines. I build web systems that turn paper records into working software."
+    />
+    <!-- TODO: add a 1200x630 PNG at public/og-image.png, then uncomment:
+    <meta property="og:image" content="https://your-domain/og-image.png" />
+    <meta name="twitter:image" content="https://your-domain/og-image.png" />
+    -->
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Sora:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Apply saved appearance before first paint to avoid a flash of the wrong theme. -->
+    <script>
+      (function () {
+        try {
+          var el = document.documentElement;
+          var theme = localStorage.getItem('theme');
+          if (theme !== 'light' && theme !== 'dark') {
+            theme = window.matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark';
+          }
+          el.dataset.theme = theme;
+
+          var accent = localStorage.getItem('accent');
+          el.dataset.accent =
+            accent === 'teal' || accent === 'clay' || accent === 'indigo'
+              ? accent
+              : 'indigo';
+
+          var backdrops = ['waves', 'slats', 'dots', 'plain'];
+          var backdrop = localStorage.getItem('backdrop');
+          if (backdrops.indexOf(backdrop) === -1) {
+            backdrop = localStorage.getItem('background') === 'dots' ? 'dots' : 'waves';
+          }
+          el.dataset.backdrop = backdrop;
+        } catch (error) {
+          /* storage blocked — keep the defaults written in the html tag */
+        }
+      })();
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Kylle Ian Acibron",
+        "jobTitle": "Full-stack developer in training",
+        "email": "mailto:kylleacibron@gmail.com",
+        "url": "https://kylle-portfolio.onrender.com/",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "Negros Oriental",
+          "addressCountry": "PH"
+        },
+        "affiliation": {
+          "@type": "CollegeOrUniversity",
+          "name": "Negros Oriental State University"
+        },
+        "sameAs": ["https://github.com/kairu15"]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

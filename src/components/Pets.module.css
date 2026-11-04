@@ -1,0 +1,662 @@
+/* Decorative dog illustrations that sit in the lower-right of the About section. */
+.companions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: clamp(1rem, 2.2vw, 1.5rem) 0 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.pair {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.caption {
+  display: grid;
+  gap: 0.12rem;
+  margin-top: 0.45rem;
+  text-align: center;
+}
+
+.names {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.note {
+  color: var(--text-mute);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.01em;
+}
+
+.sayHi {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.8rem;
+  padding: 0.42rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--bg-elev);
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  /* The figure itself is inert so it never blocks the page; the button is not. */
+  pointer-events: auto;
+  box-shadow: var(--shadow-sm);
+  transition: color var(--t), border-color var(--t), background var(--t), transform var(--t);
+}
+
+.sayHi:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.sayHi:active {
+  transform: translateY(0);
+}
+
+.sayHi:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Parts used only by the brown dog's greeting reaction. */
+.legsBrown {
+  transform-box: view-box;
+  transform-origin: 104px 200px;
+}
+
+.mouthBrownRest {
+  transition: opacity 200ms var(--ease);
+}
+
+.mouthBrownBark {
+  opacity: 0;
+  transform-box: view-box;
+  transform-origin: 104px 76px;
+  transition: opacity 200ms var(--ease);
+}
+
+.legsMono {
+  transform-box: view-box;
+  transform-origin: 100px 200px;
+}
+
+.mouthMonoRest {
+  transition: opacity 200ms var(--ease);
+}
+
+.mouthMonoBark {
+  opacity: 0;
+  transform-box: view-box;
+  transform-origin: 100px 76px;
+  transition: opacity 200ms var(--ease);
+}
+
+.dog {
+  display: block;
+  height: auto;
+}
+
+.brown {
+  width: clamp(120px, 13vw, 168px);
+}
+
+.mono {
+  width: clamp(106px, 11.5vw, 148px);
+  margin-left: clamp(-18px, -1.2vw, -10px);
+  margin-bottom: 1px;
+}
+
+/* --- Idle motion ----------------------------------------------------------
+   Only transforms are animated, so nothing triggers layout or paint. The SVG
+   groups are addressed by class and each animation includes the group's static
+   pose in its 0%/100% frame (the head groups are rotated in the markup).
+
+   Both heads share an 11s cycle, so they turn toward each other at the same
+   moment. Everything is inside a no-preference query: with reduced motion the
+   dogs keep their authored pose and nothing animates.
+   ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .tailBrown,
+  .tailMono,
+  .eyesBrown,
+  .eyesMono,
+  .headBrown,
+  .headMono,
+  .breathBrown,
+  .breathMono {
+    transform-box: view-box;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  .tailBrown {
+    transform-origin: 148px 174px;
+    animation-name: wagBrown;
+    animation-duration: 2.7s;
+  }
+
+  .tailMono {
+    transform-origin: 140px 172px;
+    animation-name: wagMono;
+    animation-duration: 4.1s;
+  }
+
+  .eyesBrown {
+    transform-origin: 104px 52px;
+    animation-name: blink;
+    animation-duration: 6.2s;
+    animation-delay: 0.8s;
+  }
+
+  .eyesMono {
+    transform-origin: 100px 54px;
+    animation-name: blink;
+    animation-duration: 6.2s;
+    animation-delay: 1.1s;
+  }
+
+  .headBrown {
+    transform-origin: 104px 90px;
+    animation-name: tiltBrown;
+    animation-duration: 11s;
+  }
+
+  .headMono {
+    transform-origin: 100px 88px;
+    animation-name: tiltMono;
+    animation-duration: 11s;
+  }
+
+  .breathBrown {
+    transform-origin: 104px 206px;
+    animation-name: breathe;
+    animation-duration: 3.7s;
+  }
+
+  .breathMono {
+    transform-origin: 100px 204px;
+    animation-name: breathe;
+    animation-duration: 4.4s;
+  }
+
+  /* Hover reaction: hovering anywhere in About makes the pair sit up and perk
+     its ears; hovering one dog lifts that dog a little further. */
+  .dog {
+    pointer-events: auto;
+    transition: transform 320ms var(--ease);
+  }
+
+  .earBrownLeft,
+  .earBrownRight,
+  .earMonoLeft,
+  .earMonoRight {
+    transform-box: fill-box;
+    transition: transform 320ms var(--ease);
+  }
+
+  .earBrownLeft,
+  .earMonoLeft {
+    transform-origin: 88% 4%;
+  }
+
+  .earBrownRight,
+  .earMonoRight {
+    transform-origin: 12% 4%;
+  }
+
+  :global(#about:hover) .dog {
+    transform: translateY(-2px);
+  }
+
+  :global(#about:hover) .mono {
+    transition-delay: 60ms;
+  }
+
+  :global(#about:hover) .dog:hover {
+    transform: translateY(-5px) rotate(-1.2deg);
+    transition-delay: 0ms;
+  }
+
+  :global(#about:hover) .mono:hover {
+    transform: translateY(-4px) rotate(1.2deg);
+  }
+
+  :global(#about:hover) .earBrownLeft,
+  :global(#about:hover) .earMonoLeft {
+    transform: rotate(5deg);
+  }
+
+  :global(#about:hover) .earBrownRight,
+  :global(#about:hover) .earMonoRight {
+    transform: rotate(-5deg);
+  }
+
+  /* Greeting reaction: every part of the brown dog moves, the black-and-white
+     dog keeps its own idle animation. */
+  .excited .tailBrown {
+    animation: wagExcited 0.5s ease-in-out infinite;
+  }
+
+  .excited .headBrown {
+    animation: headExcited 1.15s ease-in-out infinite;
+  }
+
+  .excited .earBrownLeft {
+    animation: earExcitedLeft 0.56s ease-in-out infinite;
+  }
+
+  .excited .earBrownRight {
+    animation: earExcitedRight 0.56s ease-in-out infinite;
+  }
+
+  .excited .eyesBrown {
+    animation: blinkHappy 2.8s ease-in-out infinite;
+  }
+
+  .excited .breathBrown {
+    animation: bounceExcited 0.56s ease-in-out infinite;
+  }
+
+  .excited .legsBrown {
+    animation: pawsExcited 0.28s ease-in-out infinite;
+  }
+
+  .excited .mouthBrownRest {
+    opacity: 0;
+  }
+
+  .excited .mouthBrownBark {
+    opacity: 1;
+    animation: barkBrown 0.56s ease-in-out infinite;
+  }
+
+  /* The black-and-white dog joins in with its own timings and phases, so the
+     pair reads as two animals rather than one animation played twice. */
+  .excited .tailMono {
+    animation: wagMonoExcited 0.62s ease-in-out infinite;
+    animation-delay: -0.12s;
+  }
+
+  .excited .headMono {
+    animation: headMonoExcited 1.28s ease-in-out infinite;
+    animation-delay: -0.18s;
+  }
+
+  .excited .earMonoLeft {
+    animation: earMonoExcitedLeft 0.62s ease-in-out infinite;
+    animation-delay: -0.08s;
+  }
+
+  .excited .earMonoRight {
+    animation: earMonoExcitedRight 0.62s ease-in-out infinite;
+    animation-delay: -0.14s;
+  }
+
+  .excited .eyesMono {
+    animation: blinkMonoHappy 3.1s ease-in-out infinite;
+    animation-delay: -1.4s;
+  }
+
+  .excited .breathMono {
+    animation: bounceMonoExcited 0.62s ease-in-out infinite;
+    animation-delay: -0.07s;
+  }
+
+  .excited .legsMono {
+    animation: pawsMonoExcited 0.31s ease-in-out infinite;
+  }
+
+  .excited .mouthMonoRest {
+    opacity: 0;
+  }
+
+  .excited .mouthMonoBark {
+    opacity: 1;
+    animation: barkMono 0.62s ease-in-out infinite;
+    animation-delay: -0.15s;
+  }
+}
+
+@keyframes wagBrown {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes wagMono {
+  0%,
+  100% {
+    transform: rotate(2.5deg);
+  }
+
+  50% {
+    transform: rotate(-2.5deg);
+  }
+}
+
+@keyframes blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  94.5%,
+  96.5% {
+    transform: scaleY(0.07);
+  }
+}
+
+/* Both dogs turn toward each other at the same point in the cycle. */
+@keyframes tiltBrown {
+  0%,
+  55%,
+  100% {
+    transform: rotate(-3deg);
+  }
+
+  64%,
+  79% {
+    transform: rotate(1.5deg);
+  }
+}
+
+@keyframes tiltMono {
+  0%,
+  55%,
+  100% {
+    transform: rotate(4deg);
+  }
+
+  64%,
+  78% {
+    transform: rotate(-1.5deg);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(1.012);
+  }
+}
+
+/* --- Greeting reaction (brown dog only) ---------------------------------- */
+@keyframes wagExcited {
+  0% {
+    transform: rotate(-10deg);
+  }
+
+  18% {
+    transform: rotate(9deg);
+  }
+
+  36% {
+    transform: rotate(-7deg);
+  }
+
+  54% {
+    transform: rotate(10deg);
+  }
+
+  72% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes headExcited {
+  0%,
+  100% {
+    transform: rotate(-3deg) translateY(0);
+  }
+
+  20% {
+    transform: rotate(-6deg) translateY(-1.5px);
+  }
+
+  45% {
+    transform: rotate(-0.5deg) translateY(0.5px);
+  }
+
+  70% {
+    transform: rotate(-4.5deg) translateY(-1px);
+  }
+}
+
+@keyframes earExcitedLeft {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  30% {
+    transform: rotate(8deg) translateY(-1px);
+  }
+
+  65% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes earExcitedRight {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  30% {
+    transform: rotate(-8deg) translateY(-1px);
+  }
+
+  65% {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes blinkHappy {
+  0%,
+  84%,
+  100% {
+    transform: scale(1.04);
+  }
+
+  88%,
+  91% {
+    transform: scale(1.04, 0.12);
+  }
+}
+
+@keyframes bounceExcited {
+  0%,
+  100% {
+    transform: scaleY(1) translateY(0);
+  }
+
+  35% {
+    transform: scaleY(1.02) translateY(-1.5px);
+  }
+
+  70% {
+    transform: scaleY(0.995) translateY(0.7px);
+  }
+}
+
+@keyframes pawsExcited {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(1.4px);
+  }
+}
+
+@keyframes barkBrown {
+  0%,
+  100% {
+    transform: scaleY(0.25);
+  }
+
+  38% {
+    transform: scaleY(1);
+  }
+
+  66% {
+    transform: scaleY(0.5);
+  }
+}
+
+@keyframes wagMonoExcited {
+  0% {
+    transform: rotate(-12deg);
+  }
+
+  22% {
+    transform: rotate(8deg);
+  }
+
+  44% {
+    transform: rotate(-9deg);
+  }
+
+  66% {
+    transform: rotate(11deg);
+  }
+
+  84% {
+    transform: rotate(-6deg);
+  }
+
+  100% {
+    transform: rotate(-12deg);
+  }
+}
+
+@keyframes headMonoExcited {
+  0%,
+  100% {
+    transform: rotate(4deg) translateY(0);
+  }
+
+  25% {
+    transform: rotate(8deg) translateY(-1.5px);
+  }
+
+  55% {
+    transform: rotate(1deg) translateY(0.6px);
+  }
+
+  80% {
+    transform: rotate(6deg) translateY(-1px);
+  }
+}
+
+@keyframes earMonoExcitedLeft {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  30% {
+    transform: rotate(7deg) translateY(-1px);
+  }
+
+  68% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes earMonoExcitedRight {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  30% {
+    transform: rotate(-7deg) translateY(-1px);
+  }
+
+  68% {
+    transform: rotate(-2deg);
+  }
+}
+
+@keyframes blinkMonoHappy {
+  0%,
+  86%,
+  100% {
+    transform: scale(1.05);
+  }
+
+  90%,
+  93% {
+    transform: scale(1.05, 0.12);
+  }
+}
+
+@keyframes bounceMonoExcited {
+  0%,
+  100% {
+    transform: scaleY(1) translateY(0);
+  }
+
+  40% {
+    transform: scaleY(1.018) translateY(-1.2px);
+  }
+
+  72% {
+    transform: scaleY(0.997) translateY(0.6px);
+  }
+}
+
+@keyframes pawsMonoExcited {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(1.2px);
+  }
+}
+
+@keyframes barkMono {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+
+  36% {
+    transform: scaleY(1);
+  }
+
+  68% {
+    transform: scaleY(0.45);
+  }
+}
