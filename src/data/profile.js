@@ -62,7 +62,7 @@ export const profile = {
  * GitHub API when this site was built — update them if they get stale.
  */
 export const activity = {
-  repoCount: 6,
+  repoCount: 7,
   joinedYear: 2024,
   // Public, no-key contribution chart. Replaced by a text fallback on error.
   chartUrl: 'https://ghchart.rshah.org/kairu15',

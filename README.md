@@ -158,10 +158,13 @@ dist/
 ├── index.html
 ├── favicon.svg
 ├── og-image.svg
+├── og-image.png            # social share preview (1200×630)
+├── resume.pdf              # the downloadable résumé
 └── assets/
     ├── index-<hash>.js
     ├── index-<hash>.css
-    └── Kylle-<hash>.jpg
+    ├── Kylle-<hash>.jpg
+    └── <Project>-<hash>.png  # project card screenshots
 ```
 
 `vite.config.js` sets `base: '/'`, so asset URLs are absolute (`/assets/...`). That is what
@@ -283,8 +286,9 @@ headers:
 
 ## Environment variables
 
-**None are required.** The site reads no API keys, secrets or `.env` values at build time —
-`import.meta.env` is not used anywhere in `src/`.
+**None are required.** The site reads no API keys, secrets or `.env` values at build time.
+The only `import.meta.env` usage is the built-in `BASE_URL` (in `src/data/profile.js`, for
+the résumé PDF link), which is always defined by Vite and needs no configuration.
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
@@ -341,6 +345,8 @@ Run through this after the first deploy (and after any big change):
       all apply globally and **survive a refresh** (`localStorage`).
 - [ ] The animated background renders and reacts to the cursor (needs WebGL 2).
 - [ ] Project filters work; the copy-email button confirms with a status message.
+- [ ] `https://kylle-portfolio.onrender.com/resume.pdf` downloads the résumé PDF (not the
+      index.html fallback), and the résumé page at `/#/resume` renders with its preview.
 - [ ] Refreshing on a sub-path such as `/projects` returns the app, not a 404.
 - [ ] `https://` is active with a valid certificate.
 
@@ -470,14 +476,15 @@ them block deployment.
       `src/assets/images/` are wired into the project cards and case study galleries.
 - [ ] **Live demo links** — none of these repositories is deployed publicly, so no demo
       links are shown. Set `demo` on a project once something is live.
-- [ ] **Social share image** — `public/og-image.svg` is a placeholder. Export a 1200×630 PNG
-      to `public/og-image.png`, then uncomment the `og:image` and `twitter:image` tags in
-      `index.html`.
+- [x] **Social share image** — `public/og-image.png` (1200×630, captured from the hero) is
+      wired into the `og:image` and `twitter:image` tags in `index.html`. Regenerate by
+      capturing the live site at 1200×630 after a redesign.
 - [ ] **Canonical URL** — currently `https://kylle-portfolio.onrender.com/`. Update it in
-      `index.html` (canonical, `og:url`, JSON-LD `url`) if you rename the Render service or
-      add a custom domain.
+      `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD `url`) if you
+      rename the Render service or add a custom domain.
 - [ ] **Activity numbers** — `repoCount` and `joinedYear` in `src/data/profile.js` were read
-      from the GitHub API on 2026-11-02. Update them if they drift.
+      from the GitHub API on 2026-11-05 (`repoCount` 7, `joinedYear` 2024). Update them if
+      they drift.
 
 ## Where this content came from
 
