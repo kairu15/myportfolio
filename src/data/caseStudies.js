@@ -11,6 +11,14 @@
  * challenges → results, then the gallery and links rendered by CaseStudy.jsx.
  */
 
+// Screenshots are imported rather than referenced from public/ so Vite
+// fingerprints the files and rewrites the URL for the configured base — the
+// same import works at a domain root, in a subpath, and on a static host
+// after `npm run build` (see profile.js for the same reasoning).
+import cvoScreenshot from '../assets/images/CVO.png';
+import picklesphereScreenshot from '../assets/images/PickleSphere.png';
+import hotelScreenshot from '../assets/images/BayawanBaiHotel.png';
+
 export const caseStudies = [
   {
     id: 'cvo',
@@ -160,9 +168,14 @@ export const caseStudies = [
         ],
       },
     ],
-    gallery: [],
+    gallery: [
+      {
+        src: cvoScreenshot,
+        alt: 'Public transparency homepage of the CVO geo-tagging site: a barangay-level dispersal map of Bayawan City beside counters for animals dispersed, barangays covered and re-dispersals',
+      },
+    ],
     galleryNote:
-      'The repository does not include application screenshots, so none are shown here rather than filling the gallery with unrelated imagery. Screenshots can be added to public/projects/ and referenced from this study once the interface is captured.',
+      'Only the public transparency homepage has been captured so far; the office dashboards, field-visit screens and Expo mobile app can be added to this gallery as they are captured.',
   },
   {
     id: 'picklesphere',
@@ -171,7 +184,7 @@ export const caseStudies = [
     subtitle:
       'A pickleball facility in one Django application: court bookings, payments, equipment, tournaments and live scoring over WebSockets.',
     year: '2026',
-    status: 'Complete application · no public deployment',
+    status: 'Portfolio project · no public deployment',
     role: 'Django developer — data model, role-scoped URL structure, templates, payments, WebSocket scoring and CI',
     repo: 'https://github.com/kairu15/django-project-picklesphere',
     demo: '',
@@ -304,24 +317,29 @@ export const caseStudies = [
         id: 'results',
         title: 'Results and learnings',
         paragraphs: [
-          'The repository holds ten apps, 64 migrations and 229 templates forming a complete facility workflow, with 296 tests and CI gating role access and system checks. There is no public deployment, so this is presented as a complete application rather than a live product.',
+          'The repository holds ten apps, 64 migrations and 229 templates carrying the facility workflow in code, with 296 tests and CI gating role access and system checks. There is no public deployment, so it is presented as a portfolio project rather than a live product.',
           'What I learned: express booking rules in the data model before writing screens; separate role surfaces by URL rather than by conditionals inside templates; and design a human reconciliation path beside an automated payment flow, because real facilities still take GCash screenshots at the counter.',
           'Limitations at the time of writing: no public demo or usage data. The repository also has no README, so this study is written from the code and configuration.',
         ],
       },
     ],
-    gallery: [],
+    gallery: [
+      {
+        src: picklesphereScreenshot,
+        alt: 'Public homepage of PickleSphere, the pickle ball reservation platform: a hero banner above a court search bar with location and date fields and a Check Availability button',
+      },
+    ],
     galleryNote:
-      'No application screenshots are committed to the repository; its media folder holds court and equipment photos used as content, not captures of the interface. Genuine screenshots can be added here later.',
+      'Only the public booking homepage has been captured so far; the role dashboards, tournament brackets and live-scoring screens can be added to this gallery as they are captured.',
   },
   {
     id: 'hotel',
     number: '03',
     title: 'Bayawan Bai Hotel Management System',
     subtitle:
-      'A PHP and MySQL hotel system covering guest bookings, front-desk operations and a 46-page administration panel.',
+      'A PHP and MySQL hotel system prototype built for portfolio demonstration: guest bookings, front-desk operations and a 46-page administration panel.',
     year: '2026',
-    status: 'Complete application · no public deployment',
+    status: 'Portfolio project · demonstration prototype',
     role: 'Full-stack developer — MySQL schema, PHP modules, guest, staff and admin interfaces',
     repo: 'https://github.com/kairu15/Project-Hotel-Management-System',
     demo: '',
@@ -330,7 +348,7 @@ export const caseStudies = [
         id: 'overview',
         title: 'Project overview',
         paragraphs: [
-          'The Bayawan Bai Hotel Management System is a database-driven PHP application with four audiences: a guest-facing site, a guest account area, front-desk tools for staff, and an administration panel.',
+          'The Bayawan Bai Hotel Management System is a database-driven PHP application built as a portfolio prototype for demonstration, not a fully operational production system. It spans four audiences: a guest-facing site, a guest account area, front-desk tools for staff, and an administration panel.',
           'The schema is committed as a single SQL file defining 51 tables, and the application is 151 PHP files organised by audience rather than by a framework’s conventions — a deliberate constraint, since the project used plain PHP and MySQL.',
         ],
       },
@@ -435,15 +453,20 @@ export const caseStudies = [
         id: 'results',
         title: 'Results and learnings',
         paragraphs: [
-          'The result is a working system of 51 tables and 151 PHP files spanning booking, front-desk operations and administration. It is not deployed publicly, and the README’s production-scale figures are targets rather than measurements, so this study makes no performance claims.',
+          'The repository holds a demonstration prototype of 51 tables and 151 PHP files spanning booking, front-desk operations and administration — a portfolio piece rather than a fully operational production system. It is not deployed publicly, and the README’s production-scale figures are targets rather than measurements, so this study makes no performance claims.',
           'What I learned: get the availability query right before building screens; design a schema that supports both guest and staff workflows without duplicating records; and how much discipline a framework-less PHP codebase needs to stay navigable.',
           'Limitations at the time of writing: no automated tests and no consistent CSRF protection across the application. Both are the obvious next steps, along with a deployment.',
         ],
       },
     ],
-    gallery: [],
+    gallery: [
+      {
+        src: hotelScreenshot,
+        alt: 'Guest-facing homepage of the Bayawan Bai Hotel site: a poolside hero banner reading Escape to Paradise above Book Now and Our Amenities calls to action',
+      },
+    ],
     galleryNote:
-      'The repository has no screenshots of the running application, so the gallery stays empty instead of using stock hotel photography. Real captures can be added to public/projects/ and referenced from this study.',
+      'Only the guest-facing homepage has been captured so far; the front-desk tools and the 46-page administration panel can be added to this gallery as they are captured.',
   },
 ];
 

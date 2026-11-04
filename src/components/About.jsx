@@ -3,6 +3,7 @@ import { profile } from '../data/profile.js';
 import Section from './Section.jsx';
 import SocialLinks from './SocialLinks.jsx';
 import Pets from './Pets.jsx';
+import Cats from './Cats.jsx';
 import styles from './About.module.css';
 
 /** Renders `**text**` in the bio as <strong>, leaving other text untouched. */
@@ -46,8 +47,10 @@ export default function About() {
           ))}
         </div>
 
-        {/* Card and dogs share the right column, so the dogs sit under the card
-            instead of below the much taller bio column. */}
+        {/* Card, dogs and cats share the right column, so the pets sit under
+            the card instead of below the much taller bio column. The cats sit
+            directly under the dogs; where the column is too narrow for all
+            four in one row, they wrap into two rows of two. */}
         <div className={styles.side}>
           <aside className={styles.card} aria-label="Quick facts">
             <dl className={styles.facts}>
@@ -89,6 +92,7 @@ export default function About() {
           </aside>
 
           <Pets />
+          <Cats />
         </div>
       </div>
     </Section>

@@ -40,9 +40,9 @@ export default function Hero() {
               </a>
 
               {hasResume ? (
-                <a className="btn btn-secondary" href={profile.resumeUrl} download>
-                  Download résumé
-                  <ArrowDown size={17} strokeWidth={2} aria-hidden="true" />
+                <a className="btn btn-secondary" href="#/resume">
+                  View résumé
+                  <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
                 </a>
               ) : (
                 <button

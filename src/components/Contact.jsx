@@ -125,7 +125,7 @@ export default function Contact() {
 
         <li className={styles.tileItem}>
           {profile.resumeUrl ? (
-            <a className={styles.tile} href={profile.resumeUrl} download>
+            <a className={styles.tile} href="#/resume">
               <span className={styles.tileIcon}>
                 <FileText size={21} strokeWidth={1.8} aria-hidden="true" />
               </span>

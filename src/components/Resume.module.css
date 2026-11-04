@@ -1,0 +1,352 @@
+/* ===========================================================================
+   Résumé page — page chrome mirrors CaseStudy; the sheet is a paper-like
+   preview whose colours stay fixed (it represents the printed document, so
+   it keeps light-theme "ink on paper" colours in both site themes).
+   =========================================================================== */
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--border);
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+}
+
+.barInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 60px;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 36px;
+  color: var(--text-soft);
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--t-fast);
+}
+
+.back:hover {
+  color: var(--accent);
+}
+
+.barMeta {
+  color: var(--text-mute);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.article {
+  padding-block: clamp(2rem, 5vw, 3.5rem) var(--section-space);
+}
+
+.hero {
+  max-width: 62ch;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-top: 0.7rem;
+  color: var(--text);
+  font-size: clamp(1.9rem, 4.6vw, 2.85rem);
+  text-wrap: balance;
+}
+
+.lede {
+  margin-top: 1rem;
+  color: var(--text-soft);
+  font-size: clamp(1rem, 1.6vw, 1.1rem);
+  line-height: 1.65;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.4rem;
+}
+
+/* --- The sheet ------------------------------------------------------------ */
+
+.sheetWrap {
+  max-width: 860px;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.sheet {
+  /* The sheet stands in for paper, so it uses the light theme's ink colours
+     as literals rather than tokens — the dark theme must not repaint it. */
+  --ink: #14171c;
+  --ink-soft: #414a57;
+  --ink-mute: #67707e;
+  --ink-border: #e3e0d8;
+  --ink-accent: #4f46e5;
+
+  padding: clamp(1.6rem, 4.5vw, 3.2rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #ffffff;
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  box-shadow: var(--shadow-lg);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.sheetHeader {
+  padding-bottom: 1.2rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.sheetName {
+  color: var(--ink);
+  font-size: 1.75rem;
+  letter-spacing: -0.01em;
+}
+
+.sheetRole {
+  margin-top: 0.25rem;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.sheetContact {
+  margin-top: 0.5rem;
+  color: var(--ink-mute);
+  font-size: 0.85rem;
+}
+
+.sheetContact a {
+  color: var(--ink-accent);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ink-accent) 35%, transparent);
+  text-underline-offset: 2px;
+}
+
+.sheetSection {
+  margin-top: 1.6rem;
+}
+
+.sheetHeading {
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--ink-border);
+  color: var(--ink-accent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sheetText {
+  margin-top: 0.6rem;
+  color: var(--ink-soft);
+}
+
+.sheetEntry {
+  margin-top: 0.9rem;
+}
+
+.sheetSection > .sheetEntry:first-of-type {
+  margin-top: 0.6rem;
+}
+
+.sheetEntryHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.2rem 1rem;
+}
+
+.sheetEntryTitle {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sheetEntryPeriod {
+  color: var(--ink-mute);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.sheetEntryOrg {
+  margin-top: 0.1rem;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.sheetEntryMeta {
+  margin-top: 0.3rem;
+  color: var(--ink-mute);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+}
+
+.sheetSkills {
+  margin: 0.6rem 0 0;
+}
+
+.sheetSkillRow {
+  display: grid;
+  grid-template-columns: minmax(9.5rem, auto) 1fr;
+  gap: 0.35rem 1rem;
+  padding: 0.22rem 0;
+}
+
+.sheetSkillLabel {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Java/C++ appear in no repository, so the coursework row is visually
+   downplayed rather than presented as a hard skill. */
+.sheetSkillLabelNote {
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+.sheetSkillItems {
+  color: var(--ink-soft);
+}
+
+.previewNote {
+  margin-top: 1rem;
+  color: var(--text-mute);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 640px) {
+  .sheetSkillRow {
+    grid-template-columns: 1fr;
+    gap: 0.05rem;
+  }
+
+  .sheetSkillItems {
+    margin: 0;
+  }
+}
+
+/* --- Printing the page ---------------------------------------------------- */
+/* window.print() on this page emits the sheet alone, on A4, close to the
+   downloaded PDF. Chrome and Edge accept @page from CSS modules. */
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  .bar,
+  .hero,
+  .previewNote {
+    display: none !important;
+  }
+
+  :global(body) {
+    background: #ffffff !important;
+  }
+
+  :global([data-backdrop]) {
+    display: none !important;
+  }
+
+  :global(#root) {
+    padding-inline-start: 0 !important;
+  }
+
+  :global(footer),
+  :global(.skip-link) {
+    display: none !important;
+  }
+
+  .article {
+    max-width: none;
+    padding-block: 0;
+  }
+
+  .sheetWrap {
+    max-width: none;
+    margin-top: 0;
+  }
+
+  .sheet {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 10pt;
+    line-height: 1.5;
+  }
+
+  .sheetName {
+    font-size: 20pt;
+  }
+
+  .sheetRole {
+    font-size: 11pt;
+  }
+
+  .sheetContact,
+  .sheetText,
+  .sheetEntryOrg {
+    font-size: 9.5pt;
+  }
+
+  .sheetHeading {
+    font-size: 8pt;
+    margin-top: 0;
+  }
+
+  .sheetSection {
+    margin-top: 14pt;
+  }
+
+  .sheetEntry {
+    margin-top: 8pt;
+  }
+
+  .sheetSection > .sheetEntry:first-of-type {
+    margin-top: 6pt;
+  }
+
+  .sheetEntryTitle {
+    font-size: 10.5pt;
+  }
+
+  .sheetEntryPeriod,
+  .sheetEntryMeta {
+    font-size: 8pt;
+  }
+
+  .sheetSkills {
+    margin-top: 6pt;
+  }
+
+  .sheetSkillRow {
+    padding: 1.5pt 0;
+  }
+}

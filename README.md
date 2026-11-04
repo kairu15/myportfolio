@@ -373,7 +373,9 @@ All copy lives in `src/data/`. Components only render it.
 | `src/data/skills.js` | Skill groups and items |
 | `src/data/caseStudies.js` | Case study content, including the repository evidence behind each study. Rendered at `#/case-studies/<id>` by `CaseStudy.jsx` |
 | `src/data/experience.js` | Experience and education timeline entries |
+| `src/data/resume.js` | Résumé content — the single source for both the résumé page at `#/resume` and `public/resume.pdf` |
 | `src/data/pets.js` | Names of the two illustrated dogs and their one-line caption note |
+| `src/data/cats.js` | Names of the four illustrated cats and their one-line caption note |
 
 `profile.bio` is an array of paragraphs; wrap a phrase in `**double asterisks**` to render it
 **bold** in the About section. The first entry is reused as the section's intro paragraph.
@@ -403,6 +405,12 @@ are in `src/styles/tokens.css`. Global resets, shared buttons and layout helpers
 and reused by the sidebar, hero and About section. To change it, replace that file (keep the
 name) or update the import — Vite re-hashes the filename on the next build, so no other path
 needs editing.
+
+**Résumé:** `src/data/resume.js` feeds three surfaces at once — the résumé page at `#/resume`
+(`Resume.jsx`, reached from the Contact tile), the hero's Download button, and the PDF at
+`public/resume.pdf`. After editing the data, run `npm run resume` to regenerate the PDF with
+headless Chrome/Edge (`scripts/generate-resume.mjs`, rendered from the same data module so
+the page and the PDF cannot drift apart). The PDF is real selectable text with working links.
 
 ## Navigation and appearance panel
 
@@ -456,10 +464,10 @@ These are deliberately left empty instead of being filled with invented content.
 placeholder is also marked in the UI or in a `title` attribute so you can find it. None of
 them block deployment.
 
-- [ ] **Résumé PDF** — add `public/resume.pdf` and set `resumeUrl: '/resume.pdf'` in
-      `src/data/profile.js`. Until then the Résumé link stays a non-clickable `TODO` tile.
-- [ ] **Project screenshots** — add images under `public/projects/` and set each project's
-      `screenshot` path in `src/data/projects.js`. Cards show a labelled placeholder now.
+- [x] **Résumé PDF** — generated to `public/resume.pdf` from `src/data/resume.js` and wired
+      through `resumeUrl` in `src/data/profile.js`. Regenerate with `npm run resume`.
+- [x] **Project screenshots** — `CVO.png`, `PickleSphere.png` and `BayawanBaiHotel.png` in
+      `src/assets/images/` are wired into the project cards and case study galleries.
 - [ ] **Live demo links** — none of these repositories is deployed publicly, so no demo
       links are shown. Set `demo` on a project once something is live.
 - [ ] **Social share image** — `public/og-image.svg` is a placeholder. Export a 1200×630 PNG

@@ -46,7 +46,9 @@ export default function Projects() {
                   {project.screenshot ? (
                     <img
                       src={project.screenshot}
-                      alt={`${project.title} screenshot`}
+                      alt={project.screenshotAlt || `${project.title} screenshot`}
+                      width="1920"
+                      height="1080"
                       loading="lazy"
                       decoding="async"
                     />

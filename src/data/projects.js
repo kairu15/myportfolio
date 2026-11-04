@@ -4,6 +4,14 @@
  * from"). No live demo links exist for these repositories, so none are shown.
  */
 
+// Screenshots are imported rather than referenced from public/ so Vite
+// fingerprints the files and rewrites the URL for the configured base — the
+// same import works at a domain root, in a subpath, and on a static host
+// after `npm run build` (see profile.js for the same reasoning).
+import cvoScreenshot from '../assets/images/CVO.png';
+import picklesphereScreenshot from '../assets/images/PickleSphere.png';
+import hotelScreenshot from '../assets/images/BayawanBaiHotel.png';
+
 export const projectFilters = [
   'All',
   'Web apps',
@@ -29,44 +37,47 @@ export const projects = [
     stack: ['Laravel', 'MySQL', 'React', 'Vite', 'Tailwind CSS', 'MapLibre GL', 'Expo'],
     repo: 'https://github.com/kairu15/CVO',
     demo: '',
-    // TODO: add a screenshot to public/projects/cvo.png and reference it here.
-    screenshot: '',
+    screenshot: cvoScreenshot,
+    screenshotAlt:
+      'Public transparency homepage of the CVO geo-tagging site: a barangay-level dispersal map of Bayawan City beside counters for animals dispersed, barangays covered and re-dispersals',
   },
   {
     id: 'picklesphere',
     number: '02',
     title: 'PickleSphere',
     short: 'PickleSphere',
-    subtitle: 'Pickleball facility management',
+    subtitle: 'Portfolio project · Pickleball facility platform',
     year: '2026',
     featured: true,
     category: 'Backend systems',
     categories: ['Backend systems', 'Django', 'Web apps'],
     description:
-      'A Django platform that runs a pickleball facility end to end: court reservations with conflict checks, Stripe payments, tournaments with live scoring over Django Channels and Redis, equipment inventory, and in-app notifications. Guests, staff and administrators each get their own area, and the project ships with production settings, static file compression and a CI job that boots the app.',
+      'A Django pickleball facility platform built as a portfolio project: court reservations with conflict checks, Stripe payments, tournaments with live scoring over Django Channels and Redis, equipment inventory, and in-app notifications. Guests, staff and administrators each get their own area, and the codebase ships with 296 automated tests and a CI job that boots the app. Not deployed publicly.',
     stack: ['Django', 'Python', 'MySQL', 'Channels', 'Redis', 'Stripe'],
     repo: 'https://github.com/kairu15/django-project-picklesphere',
     demo: '',
-    // TODO: add a screenshot to public/projects/picklesphere.png and reference it here.
-    screenshot: '',
+    screenshot: picklesphereScreenshot,
+    screenshotAlt:
+      'Public homepage of PickleSphere, the pickle ball reservation platform: a hero banner above a court search bar with location and date fields and a Check Availability button',
   },
   {
     id: 'hotel',
     number: '03',
     title: 'Bayawan Bai Hotel Management System',
     short: 'Bayawan Bai Hotel',
-    subtitle: 'Hotel operations · PHP and MySQL',
+    subtitle: 'Portfolio project · Hotel management prototype',
     year: '2026',
     featured: false,
     category: 'PHP',
     categories: ['Web apps', 'PHP'],
     description:
-      'A PHP and MySQL hotel management system for a hotel in Bayawan City. Guests can check room availability, book a stay, order food and reserve event spaces; staff handle check-in, check-out, walk-ins and inventory; administrators manage rooms, payments, promotions, reviews and reports. Sessions and role checks separate the three areas.',
+      'A PHP and MySQL hotel management prototype built for portfolio demonstration, not a fully operational production system. Guests can check room availability, book a stay, order food and reserve event spaces; staff handle check-in, check-out, walk-ins and inventory; administrators manage rooms, payments, promotions, reviews and reports. Sessions and role checks separate the three areas.',
     stack: ['PHP', 'MySQL', 'JavaScript', 'HTML & CSS'],
     repo: 'https://github.com/kairu15/Project-Hotel-Management-System',
     demo: '',
-    // TODO: add a screenshot to public/projects/hotel.png and reference it here.
-    screenshot: '',
+    screenshot: hotelScreenshot,
+    screenshotAlt:
+      'Guest-facing homepage of the Bayawan Bai Hotel site: a poolside hero banner reading Escape to Paradise above Book Now and Our Amenities calls to action',
   },
 ];
 

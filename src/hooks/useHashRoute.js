@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 
 const CASE_STUDY_PATTERN = /^#\/case-studies\/([\w-]+)$/;
+const RESUME_PATTERN = /^#\/resume\/?$/;
 
 export function readRoute(hash) {
+  if (RESUME_PATTERN.exec(hash)) return { view: 'resume', id: null };
   const match = CASE_STUDY_PATTERN.exec(hash);
   return match ? { view: 'caseStudy', id: match[1] } : { view: 'home', id: null };
 }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import SectionDivider from './SectionDivider.jsx';
 import styles from './Section.module.css';
 
 /**
@@ -37,6 +38,7 @@ export default function Section({ id, index, label, title, description, aside, c
       className={`${styles.section} ${visible ? styles.visible : ''}`}
       aria-labelledby={`${id}-title`}
     >
+      <SectionDivider />
       <div className="container">
         <div className={aside ? styles.split : undefined}>
           <header className={styles.head}>

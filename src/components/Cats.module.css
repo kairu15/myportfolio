@@ -1,0 +1,642 @@
+/* Decorative cat illustrations sitting under the dogs in the About section.
+   Same interaction model as Pets.module.css: idle motion (tail sway, blinks,
+   head tilts, breathing, ear twitches), a lift when the About section is
+   hovered, and a greeting reaction driven by the Say-hi button (fast tail
+   swish, ear flaps, kneading paws, meow mouth, whisker wiggles). */
+
+.clowderWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Clear separation from the dogs' figure above. */
+  margin: clamp(1.75rem, 3.5vw, 3rem) 0 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.clowder {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  column-gap: 3px;
+  row-gap: 10px;
+  max-width: 100%;
+}
+
+.caption {
+  display: grid;
+  gap: 0.12rem;
+  margin-top: 0.45rem;
+  text-align: center;
+}
+
+.names {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.note {
+  color: var(--text-mute);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.01em;
+}
+
+.sayHi {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.8rem;
+  padding: 0.42rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--bg-elev);
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  /* The figure itself is inert so it never blocks the page; the button is not. */
+  pointer-events: auto;
+  box-shadow: var(--shadow-sm);
+  transition: color var(--t), border-color var(--t), background var(--t), transform var(--t);
+}
+
+.sayHi:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.sayHi:active {
+  transform: translateY(0);
+}
+
+.sayHi:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.cat {
+  display: block;
+  height: auto;
+}
+
+/* Sizes read as ages: Mocha is the oldest and largest, Mochi and MonMon are
+   seniors a step smaller, and PotPot is a kitten — much smaller, with the
+   big-head-small-body proportions handled in the markup. The clowder lives on
+   the full container width, so one row of four fits at every viewport. */
+.brown {
+  width: clamp(96px, 12.5vw, 152px);
+}
+
+.white {
+  width: clamp(90px, 11.5vw, 140px);
+}
+
+.black {
+  width: clamp(86px, 11vw, 132px);
+}
+
+.tux {
+  width: clamp(56px, 7vw, 86px);
+}
+
+/* A slightly staggered lineup so the four read as individuals. */
+.clowder .cat:nth-child(2) {
+  margin-bottom: 3px;
+}
+
+.clowder .cat:nth-child(3) {
+  margin-bottom: 1px;
+}
+
+.clowder .cat:nth-child(4) {
+  margin-bottom: 4px;
+}
+
+/* Parts used only by the greeting reaction. */
+.legs {
+  transform-box: view-box;
+  transform-origin: 100px 202px;
+}
+
+.mouthRest {
+  transition: opacity 200ms var(--ease);
+}
+
+.mouthMeow {
+  opacity: 0;
+  transform-box: view-box;
+  transform-origin: 100px 74px;
+  transition: opacity 200ms var(--ease);
+}
+
+/* --- Idle motion ----------------------------------------------------------
+   Transform-only, same discipline as the dogs: each group carries its authored
+   pose in the 0%/100% frame, everything lives inside the no-preference query,
+   and the four cats are de-phased (durations and negative delays per variant)
+   so they never move in lockstep.
+   ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .tail,
+  .eyes,
+  .head,
+  .breath,
+  .earL,
+  .earR {
+    transform-box: view-box;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  .tail {
+    transform-origin: 134px 162px;
+    animation-name: catSway;
+    animation-duration: 3.4s;
+  }
+
+  .brown .tail {
+    animation-duration: 3.2s;
+  }
+
+  .white .tail {
+    animation-duration: 3.9s;
+    animation-delay: -1.2s;
+  }
+
+  .black .tail {
+    animation-duration: 4.4s;
+    animation-delay: -0.7s;
+  }
+
+  .tux .tail {
+    animation-duration: 2.7s;
+    animation-delay: -1.4s;
+  }
+
+  .eyes {
+    transform-origin: 100px 53px;
+    animation-name: catBlink;
+    animation-duration: 6.6s;
+    animation-delay: 0.5s;
+  }
+
+  .white .eyes {
+    animation-delay: 1.1s;
+  }
+
+  .black .eyes {
+    animation-delay: 1.7s;
+  }
+
+  .tux .eyes {
+    animation-delay: 2.3s;
+  }
+
+  .head {
+    /* The authored base tilt; the kitten tilts further — a curious youngster. */
+    --tilt-base: -2deg;
+    transform-origin: 100px 88px;
+    animation-name: catTilt;
+    animation-duration: 11s;
+  }
+
+  /* One shared 11s cycle, spread out so the cats take turns tilting. */
+  .white .head {
+    animation-delay: -2.75s;
+  }
+
+  .black .head {
+    animation-delay: -5.5s;
+  }
+
+  .tux .head {
+    --tilt-base: -7deg;
+    animation-delay: -8.25s;
+  }
+
+  .breath {
+    transform-origin: 100px 205px;
+    animation-name: catBreathe;
+    animation-duration: 4.2s;
+  }
+
+  .white .breath {
+    animation-delay: -1.05s;
+  }
+
+  .black .breath {
+    animation-delay: -2.1s;
+  }
+
+  .tux .breath {
+    animation-delay: -3.15s;
+  }
+
+  /* Occasional ear twitches — a cat thing. Origin is the ear's base on the
+     head, so both the twitch and the hover-perk pivot naturally. */
+  .earL,
+  .earR {
+    transform-box: fill-box;
+    transition: transform 320ms var(--ease);
+  }
+
+  .earL {
+    transform-origin: 92% 94%;
+    animation-name: catTwitchL;
+    animation-duration: 7.6s;
+    animation-delay: 0.6s;
+  }
+
+  .earR {
+    transform-origin: 8% 94%;
+    animation-name: catTwitchR;
+    animation-duration: 7.6s;
+    animation-delay: 2.9s;
+  }
+
+  .black .earL,
+  .tux .earL {
+    animation-delay: 3.4s;
+  }
+
+  .black .earR,
+  .tux .earR {
+    animation-delay: 5.7s;
+  }
+
+  /* Hover reaction: hovering anywhere in About lifts the clowder slightly;
+     hovering one cat lifts it a little further, alternating tilt direction. */
+  .cat {
+    pointer-events: auto;
+    transition: transform 320ms var(--ease);
+  }
+
+  :global(#about:hover) .cat {
+    transform: translateY(-2px);
+  }
+
+  :global(#about:hover) .white,
+  :global(#about:hover) .black {
+    transition-delay: 60ms;
+  }
+
+  :global(#about:hover) .cat:hover {
+    transform: translateY(-5px) rotate(-1.4deg);
+    transition-delay: 0ms;
+  }
+
+  :global(#about:hover) .white:hover,
+  :global(#about:hover) .tux:hover {
+    transform: translateY(-4px) rotate(1.4deg);
+  }
+
+  :global(#about:hover) .earL {
+    transform: rotate(4deg);
+  }
+
+  :global(#about:hover) .earR {
+    transform: rotate(-4deg);
+  }
+
+  /* Greeting reaction: every part moves — fast tail swish, bouncing head,
+     flapping ears, kneading paws, meow mouth and whisker wiggles. */
+  .excited .tail {
+    animation-name: catSwish;
+    animation-duration: 0.55s;
+  }
+
+  .excited.white .tail {
+    animation-delay: -0.15s;
+  }
+
+  .excited.black .tail {
+    animation-delay: -0.3s;
+  }
+
+  .excited.tux .tail {
+    animation-delay: -0.45s;
+  }
+
+  .excited .head {
+    animation-name: catHeadBounce;
+    animation-duration: 1.2s;
+  }
+
+  .excited.black .head {
+    animation-delay: -0.2s;
+  }
+
+  .excited .earL {
+    animation-name: catEarFlapL;
+    animation-duration: 0.58s;
+    animation-delay: 0s;
+  }
+
+  .excited .earR {
+    animation-name: catEarFlapR;
+    animation-duration: 0.58s;
+    animation-delay: -0.1s;
+  }
+
+  .excited .eyes {
+    animation-name: catBlinkHappy;
+    animation-duration: 3s;
+  }
+
+  .excited .breath {
+    animation-name: catBounce;
+    animation-duration: 0.6s;
+  }
+
+  .excited.white .breath {
+    animation-delay: -0.08s;
+  }
+
+  .excited .legs {
+    animation-name: catKnead;
+    animation-duration: 0.3s;
+  }
+
+  .excited .mouthRest {
+    opacity: 0;
+  }
+
+  .excited .mouthMeow {
+    opacity: 1;
+    animation-name: catMeow;
+    animation-duration: 0.6s;
+    animation-delay: -0.12s;
+  }
+
+  .whiskersL,
+  .whiskersR {
+    transform-box: fill-box;
+    transform-origin: 100% 50%;
+  }
+
+  .whiskersR {
+    transform-origin: 0% 50%;
+  }
+
+  .excited .whiskersL {
+    animation-name: catWhiskerL;
+    animation-duration: 0.62s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+  }
+
+  .excited .whiskersR {
+    animation-name: catWhiskerR;
+    animation-duration: 0.62s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-delay: -0.14s;
+  }
+}
+
+@keyframes catSway {
+  0%,
+  100% {
+    transform: rotate(-2.5deg);
+  }
+
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes catBlink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  94.5%,
+  96.5% {
+    transform: scaleY(0.07);
+  }
+}
+
+@keyframes catTilt {
+  0%,
+  55%,
+  100% {
+    transform: rotate(var(--tilt-base));
+  }
+
+  64%,
+  79% {
+    transform: rotate(2.5deg);
+  }
+}
+
+@keyframes catBreathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(1.012);
+  }
+}
+
+@keyframes catTwitchL {
+  0%,
+  86%,
+  96%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  89% {
+    transform: rotate(7deg);
+  }
+
+  92% {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes catTwitchR {
+  0%,
+  86%,
+  96%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  89% {
+    transform: rotate(-7deg);
+  }
+
+  92% {
+    transform: rotate(3deg);
+  }
+}
+
+/* --- Greeting reaction ---------------------------------------------------- */
+@keyframes catSwish {
+  0% {
+    transform: rotate(-11deg);
+  }
+
+  20% {
+    transform: rotate(9deg);
+  }
+
+  42% {
+    transform: rotate(-8deg);
+  }
+
+  64% {
+    transform: rotate(10deg);
+  }
+
+  84% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(-11deg);
+  }
+}
+
+@keyframes catHeadBounce {
+  0%,
+  100% {
+    transform: rotate(var(--tilt-base)) translateY(0);
+  }
+
+  22% {
+    transform: rotate(calc(var(--tilt-base) - 3deg)) translateY(-1.5px);
+  }
+
+  48% {
+    transform: rotate(calc(var(--tilt-base) + 2.5deg)) translateY(0.5px);
+  }
+
+  74% {
+    transform: rotate(calc(var(--tilt-base) - 1.5deg)) translateY(-1px);
+  }
+}
+
+@keyframes catEarFlapL {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  30% {
+    transform: rotate(8deg) translateY(-1px);
+  }
+
+  66% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes catEarFlapR {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  30% {
+    transform: rotate(-8deg) translateY(-1px);
+  }
+
+  66% {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes catBlinkHappy {
+  0%,
+  85%,
+  100% {
+    transform: scale(1.04);
+  }
+
+  89%,
+  92% {
+    transform: scale(1.04, 0.12);
+  }
+}
+
+@keyframes catBounce {
+  0%,
+  100% {
+    transform: scaleY(1) translateY(0);
+  }
+
+  38% {
+    transform: scaleY(1.02) translateY(-1.4px);
+  }
+
+  72% {
+    transform: scaleY(0.996) translateY(0.7px);
+  }
+}
+
+@keyframes catKnead {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(1.3px);
+  }
+}
+
+@keyframes catMeow {
+  0%,
+  100% {
+    transform: scaleY(0.25);
+  }
+
+  38% {
+    transform: scaleY(1);
+  }
+
+  68% {
+    transform: scaleY(0.5);
+  }
+}
+
+@keyframes catWhiskerL {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  35% {
+    transform: rotate(-3deg);
+  }
+
+  70% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes catWhiskerR {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  35% {
+    transform: rotate(3deg);
+  }
+
+  70% {
+    transform: rotate(-2deg);
+  }
+}

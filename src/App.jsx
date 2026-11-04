@@ -13,12 +13,14 @@ import Experience from './components/Experience.jsx';
 import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
 import CaseStudy from './components/CaseStudy.jsx';
+import Resume from './components/Resume.jsx';
 
 export default function App() {
   const appearance = useAppearance();
   const route = useHashRoute();
   const study =
     route.view === 'caseStudy' ? caseStudies.find((item) => item.id === route.id) : null;
+  const isSubview = Boolean(study) || route.view === 'resume';
 
   // Coming back from a case study to a section link (#projects) cannot rely on
   // the browser: the section does not exist while the case study is rendered.
@@ -34,9 +36,10 @@ export default function App() {
 
   return (
     <>
-      {/* The case study view renders its own skip link: a plain #main anchor
-          would be read as a hash route and navigate back to the home page. */}
-      {study ? null : (
+      {/* The case study and résumé views render their own skip link: a plain
+          #main anchor would be read as a hash route and navigate back to the
+          home page. */}
+      {isSubview ? null : (
         <a className="skip-link" href="#main">
           Skip to main content
         </a>
@@ -44,6 +47,8 @@ export default function App() {
       <Background appearance={appearance} />
       {study ? (
         <CaseStudy study={study} />
+      ) : route.view === 'resume' ? (
+        <Resume />
       ) : (
         <>
           <Nav appearance={appearance} />

@@ -3,6 +3,33 @@
   position: relative;
 }
 
+/* Dotted-horizon boundary (SectionDivider) pinned to the top edge of the
+   section, centred in the gap between two sections' content. Its width follows
+   the .container content box — same gutters and max-width as the section
+   content — so both ends align with the content above and below it instead of
+   stretching edge to edge. The section box and the container share the same
+   centre axis (the rail offset applies to both), so 50% + translate lands the
+   divider exactly on the container. */
+.divider {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  width: min(100% - 2 * var(--gutter), var(--max-width) - 2 * var(--gutter));
+  height: 56px;
+  pointer-events: none;
+}
+
+.dividerLine {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.dividerDot {
+  fill: var(--text-mute);
+}
+
 .head {
   max-width: 58ch;
   margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
