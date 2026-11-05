@@ -14,6 +14,7 @@ import Skills from './components/Skills.jsx';
 import Experience from './components/Experience.jsx';
 import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
+import MusicPlayer from './components/MusicPlayer.jsx';
 
 // The case-study and résumé views are clicked into, not landed on. Splitting
 // them out keeps them off the initial bundle and gives their navigation a real
@@ -80,6 +81,10 @@ export default function App() {
           <Footer />
         </>
       )}
+
+      {/* Lives outside the view switch: music keeps playing while a case study
+          or the résumé page is open, in the corner of every view. */}
+      <MusicPlayer />
     </>
   );
 }
