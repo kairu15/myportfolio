@@ -29,3 +29,6 @@ Thumbs.db
 
 # github api cache used while building content
 .ghcache/
+
+# local mp3 originals (playlist copies live in public/music)
+/*.mp3
