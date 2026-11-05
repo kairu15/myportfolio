@@ -13,4 +13,7 @@ export const tracks = [
   },
   { title: 'heaven and hell', artist: 'wave to earth', src: '/music/heaven-and-hell.mp3' },
   { title: 'love.', artist: 'wave to earth', src: '/music/love.mp3' },
+  { title: 'Tungod Nimo', artist: 'Angelo Rudy', src: '/music/tungod-nimo.mp3' },
+  { title: 'Higugma', artist: 'Cliff feat. Angelo Rudy', src: '/music/higugma.mp3' },
+  { title: 'What If Ako?', artist: 'Angelo Rudy', src: '/music/what-if-ako.mp3' },
 ];
