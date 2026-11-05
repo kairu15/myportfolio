@@ -4,6 +4,7 @@ import { GithubIcon } from './BrandIcons.jsx';
 import { projectFilters, projects, earlierRepos } from '../data/projects.js';
 import { caseStudyIds } from '../data/caseStudies.js';
 import Section from './Section.jsx';
+import { SkeletonImage } from './Skeleton.jsx';
 import styles from './Projects.module.css';
 
 export default function Projects() {
@@ -44,7 +45,8 @@ export default function Projects() {
               <article className={styles.card}>
                 <div className={styles.shot}>
                   {project.screenshot ? (
-                    <img
+                    <SkeletonImage
+                      className={styles.shotFrame}
                       src={project.screenshot}
                       alt={project.screenshotAlt || `${project.title} screenshot`}
                       width="1920"

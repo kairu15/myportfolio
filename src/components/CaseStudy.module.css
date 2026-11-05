@@ -212,6 +212,13 @@
   margin-top: 1rem;
 }
 
+.galleryFrame {
+  /* Wrapper for the gallery shimmer; the reserved 16/9 attributes mean the
+     real image cross-fades in with no layout shift. */
+  width: 100%;
+  border-radius: var(--radius-sm);
+}
+
 .gallery img {
   width: 100%;
   height: auto;

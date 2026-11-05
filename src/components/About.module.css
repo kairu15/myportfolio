@@ -12,6 +12,14 @@
   margin-bottom: 1.4rem;
 }
 
+.avatarFrame {
+  /* Wrapper for the avatar's shimmer; same footprint as the avatar so the
+     circular crop and reserved aspect ratio carry over. */
+  flex: none;
+  width: clamp(56px, 11vw, 68px);
+  border-radius: 50%;
+}
+
 .avatar {
   flex: none;
   width: clamp(56px, 11vw, 68px);
@@ -110,7 +118,7 @@
   border-top: 1px solid var(--border);
 }
 
-/* Right column: the facts card with the dogs tucked underneath it. */
+/* Right column: the quick-facts card as a narrow aside. */
 .side {
   display: flex;
   flex-direction: column;
@@ -120,6 +128,26 @@
 
 .side > .card {
   width: 100%;
+}
+
+/* Dogs and cats sit together below the text, centered across the full
+   section width. The figures keep their own captions, animations and Say-hi
+   buttons; the row only controls their placement, so they line up side by
+   side on desktop and tablet and stack neatly on mobile. The figures'
+   own top margins (tuned for the old stacked column) are reset here —
+   the row's gaps handle spacing instead. */
+.companionsRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  column-gap: clamp(2.5rem, 6vw, 4rem);
+  row-gap: 1.75rem;
+  margin-top: clamp(1.5rem, 3.5vw, 2.75rem);
+}
+
+.companionsRow > figure {
+  margin: 0;
 }
 
 @media (min-width: 900px) {

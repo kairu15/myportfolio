@@ -71,6 +71,16 @@
   overflow-x: auto;
 }
 
+.chartFrame {
+  min-width: 480px;
+}
+
+.chartOverlay {
+  /* The chart has an unknown height until it arrives (external service),
+     so the shimmer needs its own floor to be visible. */
+  min-height: 2.75rem;
+}
+
 .chart {
   width: 100%;
   min-width: 480px;

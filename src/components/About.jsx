@@ -4,6 +4,7 @@ import Section from './Section.jsx';
 import SocialLinks from './SocialLinks.jsx';
 import Pets from './Pets.jsx';
 import Cats from './Cats.jsx';
+import { SkeletonImage } from './Skeleton.jsx';
 import styles from './About.module.css';
 
 /** Renders `**text**` in the bio as <strong>, leaving other text untouched. */
@@ -21,14 +22,15 @@ export default function About() {
       id="about"
       index="01"
       label="About"
-      title="Student by day, shipping web systems by night"
+      title="A little more about me"
       description={first}
     >
       <div className={styles.grid}>
         <div className={styles.bio}>
           <figure className={styles.identity}>
-            <img
-              className={styles.avatar}
+            <SkeletonImage
+              className={styles.avatarFrame}
+              imageClassName={styles.avatar}
               src={profile.photo}
               alt={profile.photoAlt}
               width="2316"
@@ -47,10 +49,9 @@ export default function About() {
           ))}
         </div>
 
-        {/* Card, dogs and cats share the right column, so the pets sit under
-            the card instead of below the much taller bio column. The cats sit
-            directly under the dogs; where the column is too narrow for all
-            four in one row, they wrap into two rows of two. */}
+        {/* The quick-facts card sits beside the bio as a narrow aside; the pet
+            illustrations live in a centered row below the grid instead, where
+            they have the full section width to spread out. */}
         <div className={styles.side}>
           <aside className={styles.card} aria-label="Quick facts">
             <dl className={styles.facts}>
@@ -91,9 +92,12 @@ export default function About() {
             </div>
           </aside>
 
-          <Pets />
-          <Cats />
         </div>
+      </div>
+
+      <div className={styles.companionsRow}>
+        <Pets />
+        <Cats />
       </div>
     </Section>
   );

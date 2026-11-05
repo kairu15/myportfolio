@@ -486,6 +486,28 @@ them block deployment.
       from the GitHub API on 2026-11-05 (`repoCount` 7, `joinedYear` 2024). Update them if
       they drift.
 
+## Placeholders still to replace
+
+These are deliberately left empty instead of being filled with invented content. Every
+placeholder is also marked in the UI or in a `title` attribute so you can find it. None of
+them block deployment.
+
+- [x] **Résumé PDF** — generated to `public/resume.pdf` from `src/data/resume.js` and wired
+      through `resumeUrl` in `src/data/profile.js`. Regenerate with `npm run resume`.
+- [x] **Project screenshots** — `CVO.png`, `PickleSphere.png` and `BayawanBaiHotel.png` in
+      `src/assets/images/` are wired into the project cards and case study galleries.
+- [ ] **Live demo links** — none of these repositories is deployed publicly, so no demo
+      links are shown. Set `demo` on a project once something is live.
+- [x] **Social share image** — `public/og-image.png` (1200×630, captured from the hero) is
+      wired into the `og:image` and `twitter:image` tags in `index.html`. Regenerate by
+      capturing the live site at 1200×630 after a redesign.
+- [ ] **Canonical URL** — currently `https://kylle-portfolio.onrender.com/`. Update it in
+      `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD `url`) if you
+      rename the Render service or add a custom domain.
+- [ ] **Activity numbers** — `repoCount` and `joinedYear` in `src/data/profile.js` were read
+      from the GitHub API on 2026-11-05 (`repoCount` 7, `joinedYear` 2024). Update them if
+      they drift.
+
 ## Where this content came from
 
 The project cards were written by reading the actual repositories on

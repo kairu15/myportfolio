@@ -1,0 +1,85 @@
+/* ===========================================================================
+   Skeleton primitives — shared by every loading placeholder on the site.
+   Blocks pick up the theme automatically through the existing tokens, so the
+   same classes read as soft grey on light and dark grey on the dark theme.
+   The sheen is a single translated gradient sweep (GPU-composited, no layout
+   cost). Under prefers-reduced-motion the sweep is removed and the block is
+   calm and static, like every other decoration on this site.
+   =========================================================================== */
+
+/* Basic placeholder block. Size it from the caller's layout class. */
+.box {
+  display: block;
+  position: relative;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-soft);
+}
+
+.box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    100deg,
+    transparent 28%,
+    var(--skel-sheen) 46%,
+    transparent 64%
+  );
+  background-repeat: no-repeat;
+  background-size: 260% 100%;
+  background-position: -110% 0;
+  animation: sweep 2s var(--ease) infinite;
+}
+
+@keyframes sweep {
+  to {
+    background-position: 110% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .box::after {
+    content: none;
+  }
+}
+
+/* ------------------------------------------------------------------ image --
+   SkeletonImage renders its real <img> straight away and covers it with a
+   matching shimmer until the browser reports load (or error), so media never
+   pops in over a blank box. The wrapper reserves space through the image's
+   own width/height or aspect-ratio, so swap-in causes no layout shift. */
+
+.imageWrap {
+  position: relative;
+  display: block;
+}
+
+.image {
+  display: block;
+  opacity: 0;
+  transition: opacity var(--t-slow) var(--ease);
+}
+
+.imageReady {
+  opacity: 1;
+}
+
+/* Overlay spans reuse .box's shimmer. Declared after .box so `inherit` and
+   the absolute positioning win the cascade at equal specificity. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+/* Static hatching while the source itself fails — deliberately quiet, since
+   most callers also render their own error message. */
+.broken {
+  background-color: var(--bg-soft);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 10px,
+    var(--skel-sheen) 10px 11px
+  );
+}

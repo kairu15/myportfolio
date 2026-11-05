@@ -75,6 +75,13 @@
   overflow: hidden;
 }
 
+.shotFrame {
+  /* Wrapper for the screenshot shimmer; stretches over the card's own
+     16/8 shot area so nothing moves when the image fades in. */
+  width: 100%;
+  height: 100%;
+}
+
 .shot img {
   width: 100%;
   height: 100%;

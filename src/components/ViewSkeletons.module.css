@@ -1,0 +1,191 @@
+/* Layout skeletons for the code-split case-study and résumé views. Their
+   shapes mirror the real page structure (top bar, hero, prose sections, sheet
+   or gallery) while the route chunk streams in, and inherit the theme tokens
+   like the rest of the site. */
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-block: 0.9rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.barBack {
+  width: 11rem;
+  height: 2.25rem;
+  flex: none;
+}
+
+.barMeta {
+  width: 9.5rem;
+  height: 0.7rem;
+}
+
+.article {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  padding-block: clamp(2rem, 5vw, 3.5rem) 3rem;
+}
+
+.hero {
+  display: grid;
+  gap: 0.85rem;
+  max-width: 720px;
+}
+
+.heroEyebrow {
+  width: 9rem;
+  height: 0.7rem;
+}
+
+.heroTitle {
+  width: 100%;
+  max-width: 560px;
+  height: clamp(2rem, 5vw, 2.9rem);
+}
+
+.heroTitleShort {
+  width: 62%;
+}
+
+.heroLede {
+  width: min(480px, 90%);
+  height: 0.95rem;
+}
+
+.heroPills {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.heroPill {
+  width: 6.5rem;
+  height: 1.9rem;
+}
+
+.heroPillShort {
+  width: 4.5rem;
+}
+
+.button {
+  width: 10.5rem;
+  height: 2.6rem;
+  margin-top: 0.6rem;
+  border-radius: var(--radius-pill);
+}
+
+/* Text prose drop: a small heading plus wrapped body lines. */
+.prose {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 720px;
+}
+
+.line {
+  height: 0.9rem;
+}
+
+.lineIndent {
+  width: 94%;
+}
+
+.lineShort {
+  width: 68%;
+}
+
+/* Two-column content + summary card on wide screens, like the real layout. */
+.layout {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.asideCard {
+  display: grid;
+  gap: 0.9rem;
+  align-self: start;
+  padding: 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+}
+
+.asideTitle {
+  width: 40%;
+  height: 1rem;
+}
+
+.asideRow {
+  height: 0.8rem;
+}
+
+.asideRowShort {
+  width: 75%;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+  max-width: 720px;
+}
+
+/* The font list inside the résumé sheet skeleton. */
+.sheet {
+  display: grid;
+  gap: 1.1rem;
+  padding: clamp(1.4rem, 3vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-sm);
+}
+
+.sheetHeader {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.sheetName {
+  width: 55%;
+  height: 1.7rem;
+}
+
+.sheetRole {
+  width: 38%;
+  height: 0.9rem;
+}
+
+.sheetContact {
+  width: 62%;
+  height: 0.7rem;
+}
+
+.sheetHeading {
+  width: 30%;
+  height: 0.85rem;
+  margin-bottom: 0.2rem;
+}
+
+.sheetRows {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.sheetRow {
+  height: 0.7rem;
+}
+
+.sheetRowShort {
+  width: 78%;
+}
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) minmax(230px, 280px);
+  }
+}

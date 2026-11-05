@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import useAppearance from './hooks/useAppearance.js';
 import useHashRoute from './hooks/useHashRoute.js';
 import { caseStudies } from './data/caseStudies.js';
-import Background from './components/Background.jsx';
-import Nav from './components/Nav.jsx';
+import ViewBoundary from './components/ViewBoundary.jsx';
+import { CaseStudySkeleton, ResumeSkeleton } from './components/ViewSkeletons.jsx';
+import Background from './components/Background.jsx';import Nav from './components/Nav.jsx'
+;
 import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
 import Projects from './components/Projects.jsx';
@@ -12,8 +14,13 @@ import Skills from './components/Skills.jsx';
 import Experience from './components/Experience.jsx';
 import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
-import CaseStudy from './components/CaseStudy.jsx';
-import Resume from './components/Resume.jsx';
+
+// The case-study and résumé views are clicked into, not landed on. Splitting
+// them out keeps them off the initial bundle and gives their navigation a real
+// loading boundary — <Suspense> shows their layout skeleton while the chunk
+// streams in, with no artificial delay.
+const CaseStudyView = lazy(() => import('./components/CaseStudy.jsx'));
+const ResumeView = lazy(() => import('./components/Resume.jsx'));
 
 export default function App() {
   const appearance = useAppearance();
@@ -45,10 +52,19 @@ export default function App() {
         </a>
       )}
       <Background appearance={appearance} />
+
       {study ? (
-        <CaseStudy study={study} />
+        <ViewBoundary key={`study-${route.id}`}>
+          <Suspense fallback={<CaseStudySkeleton />}>
+            <CaseStudyView study={study} />
+          </Suspense>
+        </ViewBoundary>
       ) : route.view === 'resume' ? (
-        <Resume />
+        <ViewBoundary key="resume">
+          <Suspense fallback={<ResumeSkeleton />}>
+            <ResumeView />
+          </Suspense>
+        </ViewBoundary>
       ) : (
         <>
           <Nav appearance={appearance} />

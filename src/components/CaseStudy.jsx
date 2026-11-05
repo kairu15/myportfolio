@@ -4,6 +4,7 @@ import { GithubIcon } from './BrandIcons.jsx';
 import { caseStudies } from '../data/caseStudies.js';
 import { profile } from '../data/profile.js';
 import Footer from './Footer.jsx';
+import { SkeletonImage } from './Skeleton.jsx';
 import styles from './CaseStudy.module.css';
 
 function Bullets({ items }) {
@@ -134,7 +135,15 @@ export default function CaseStudy({ study }) {
                   <ul className={styles.gallery}>
                     {study.gallery.map((image) => (
                       <li key={image.src}>
-                        <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+                        <SkeletonImage
+                          className={styles.galleryFrame}
+                          src={image.src}
+                          alt={image.alt}
+                          width="1920"
+                          height="1080"
+                          loading="lazy"
+                          decoding="async"
+                        />
                       </li>
                     ))}
                   </ul>

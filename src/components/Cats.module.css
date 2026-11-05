@@ -1,14 +1,16 @@
-/* Decorative cat illustrations sitting under the dogs in the About section.
-   Same interaction model as Pets.module.css: idle motion (tail sway, blinks,
-   head tilts, breathing, ear twitches), a lift when the About section is
-   hovered, and a greeting reaction driven by the Say-hi button (fast tail
-   swish, ear flaps, kneading paws, meow mouth, whisker wiggles). */
+/* Decorative cat illustrations sitting in the centered companions row
+   beside the dogs, under the About text. Same interaction model as
+   Pets.module.css: idle motion (tail sway, blinks, head tilts, breathing,
+   ear twitches), a lift when the About section is hovered, and a greeting
+   reaction driven by the Say-hi button (fast tail swish, ear flaps, kneading
+   paws, meow mouth, whisker wiggles). */
 
 .clowderWrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Clear separation from the dogs' figure above. */
+  /* Separation from the dogs is handled by the row's gap; this margin only
+     applies when the figures are used outside the row. */
   margin: clamp(1.75rem, 3.5vw, 3rem) 0 0;
   pointer-events: none;
   user-select: none;

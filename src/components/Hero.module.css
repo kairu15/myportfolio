@@ -10,28 +10,6 @@
   align-items: center;
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  margin-bottom: 1.25rem;
-  padding: 0.3rem 0.7rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
-  background: var(--bg-elev);
-  color: var(--text-soft);
-  font-size: 0.78rem;
-  font-weight: 500;
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
-}
-
 .greeting {
   margin-bottom: 0.55rem;
   color: var(--text-mute);
@@ -137,6 +115,14 @@
   justify-self: center;
   width: min(100%, 300px);
   margin: 0;
+}
+
+.portraitFrame {
+  /* Wrapper for the skeleton shimmer: inherits the circular crop so the
+     placeholder rounds like the real photo reserved by its aspect ratio. */
+  display: block;
+  width: 100%;
+  border-radius: 50%;
 }
 
 .photo {

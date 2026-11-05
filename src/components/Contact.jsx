@@ -64,7 +64,7 @@ export default function Contact() {
       index="06"
       label="Say hello"
       title="Good things start with a conversation."
-      description={`${profile.availability}. If you have a project, a question, or a role in mind, I'd love to hear what you're working on.`}
+      description="If you have a project, a question, or a role in mind, I'd love to hear what you're working on."
       aside={
         <div className={styles.card}>
           <p className={styles.cardLabel}>The best way to reach me</p>

@@ -27,10 +27,9 @@ export const resume = {
     label: 'github.com/kairu15',
     url: 'https://github.com/kairu15',
   },
-  availability: 'Open to internships, OJT and junior developer roles',
 
   summary:
-    'BS Information Technology student at Negros Oriental State University (NORSU-BSC) and aspiring full-stack developer. Builds practical web systems end to end — from MySQL schemas and application logic to responsive interfaces — using Django, Laravel, React, PHP and JavaScript. Current work includes a capstone dispersal tracking system for a City Veterinary Office, alongside portfolio projects for a pickleball facility and a hotel. Open to internships, OJT and junior developer roles.',
+    'BS Information Technology student at Negros Oriental State University (NORSU-BSC) and full-stack developer in training. Builds practical web systems end to end — from MySQL schemas and application logic to responsive interfaces — using Django, Laravel, React, PHP and JavaScript. Current work includes an internship contributing to university web systems, a capstone dispersal tracking system for a City Veterinary Office, and portfolio projects for a pickleball facility and a hotel.',
 
   education: {
     school: 'Negros Oriental State University – Bayawan–Sta. Catalina Campus (NORSU-BSC)',

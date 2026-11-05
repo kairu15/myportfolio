@@ -1,4 +1,5 @@
-/* Decorative dog illustrations that sit in the lower-right of the About section. */
+/* Decorative dog illustrations sitting in the centered companions row
+   underneath the About text (placement handled by About.module.css). */
 .companions {
   display: flex;
   flex-direction: column;

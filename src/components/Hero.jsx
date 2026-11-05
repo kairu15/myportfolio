@@ -1,6 +1,7 @@
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { GithubIcon } from './BrandIcons.jsx';
 import { profile } from '../data/profile.js';
+import { SkeletonImage } from './Skeleton.jsx';
 import styles from './Hero.module.css';
 
 export default function Hero() {
@@ -12,11 +13,6 @@ export default function Hero() {
       <div className="container">
         <div className={styles.grid}>
           <div className={styles.copy}>
-            <p className={styles.badge}>
-              <span className={styles.dot} aria-hidden="true" />
-              {profile.availability}
-            </p>
-
             <p className={styles.greeting}>Hello, I&rsquo;m {profile.name}.</p>
 
             <h1 className={styles.title}>
@@ -77,8 +73,9 @@ export default function Hero() {
           </div>
 
           <figure className={styles.portrait}>
-            <img
-              className={styles.photo}
+            <SkeletonImage
+              className={styles.portraitFrame}
+              imageClassName={styles.photo}
               src={profile.photo}
               alt={profile.photoAlt}
               width="2316"

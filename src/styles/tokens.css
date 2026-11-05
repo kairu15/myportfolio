@@ -56,6 +56,8 @@
   --shadow-sm: 0 1px 2px rgba(20, 23, 28, 0.05);
   --shadow: 0 18px 40px -26px rgba(20, 23, 28, 0.3);
   --shadow-lg: 0 40px 70px -40px rgba(20, 23, 28, 0.35);
+  /* Skeleton loading placeholders: soft sheen swept across --bg-soft blocks. */
+  --skel-sheen: rgba(255, 255, 255, 0.5);
   --accent: #4f46e5;
   --accent-ink: #ffffff;
   --accent-soft: rgba(79, 70, 229, 0.12);
@@ -77,6 +79,8 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow: 0 18px 40px -26px rgba(0, 0, 0, 0.8);
   --shadow-lg: 0 40px 70px -40px rgba(0, 0, 0, 0.85);
+  /* Skeleton loading placeholders: soft sheen swept across --bg-soft blocks. */
+  --skel-sheen: rgba(240, 242, 246, 0.07);
   --accent: #a5b4fc;
   --accent-ink: #0c0f14;
   --accent-soft: rgba(165, 180, 252, 0.16);

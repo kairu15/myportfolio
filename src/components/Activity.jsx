@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { GithubIcon } from './BrandIcons.jsx';
 import { activity, profile } from '../data/profile.js';
 import Section from './Section.jsx';
+import { SkeletonImage } from './Skeleton.jsx';
 import styles from './Activity.module.css';
 
 export default function Activity() {
@@ -52,12 +53,14 @@ export default function Activity() {
               to see recent activity.
             </p>
           ) : (
-            <img
-              className={styles.chart}
+            <SkeletonImage
+              className={styles.chartFrame}
+              imageClassName={styles.chart}
               src={activity.chartUrl}
               alt={activity.chartAlt}
               loading="lazy"
               decoding="async"
+              overlayClassName={styles.chartOverlay}
               onError={() => setChartFailed(true)}
             />
           )}
