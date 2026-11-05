@@ -16,4 +16,7 @@ export const tracks = [
   { title: 'Tungod Nimo', artist: 'Angelo Rudy', src: '/music/tungod-nimo.mp3' },
   { title: 'Higugma', artist: 'Cliff feat. Angelo Rudy', src: '/music/higugma.mp3' },
   { title: 'What If Ako?', artist: 'Angelo Rudy', src: '/music/what-if-ako.mp3' },
+  { title: 'Beaches', artist: 'beabadoobee', src: '/music/beaches.mp3' },
+  { title: 'Coffee', artist: 'beabadoobee', src: '/music/coffee.mp3' },
+  { title: 'Glue Song', artist: 'beabadoobee', src: '/music/glue-song.mp3' },
 ];
