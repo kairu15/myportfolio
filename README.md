@@ -1,6 +1,6 @@
 # Kylle Ian Acibron — Portfolio
 
-A single-page portfolio for Kylle Ian Acibron, an IT student and full-stack developer in
+A single-page portfolio for Kylle Ian Acibron, an IT student and aspiring web developer in
 Negros Oriental, Philippines. It is a **static React site**: no server, no database, no API
 keys. The whole thing builds to a folder of HTML, CSS, JS and images that any static host can
 serve — including **Render**, which is the target this README documents.
@@ -88,9 +88,9 @@ myportfolio/
     │   └── base.css           Resets, shared buttons, layout helpers
     └── components/            Nav, Hero, About, Projects, Activity, Skills,
                                Experience, Contact, Footer, ThemePanel,
-                               MusicPlayer, Section, SocialLinks, BrandIcons,
-                               Pets, Background, PatternWaves, MicroSlats,
-                               patternTheme.js
+                               MusicPlayer, PixelPet, Section, SocialLinks,
+                               BrandIcons, Pets, Background, PatternWaves,
+                               MicroSlats, patternTheme.js
                                (+ one *.module.css each)
 ```
 
@@ -391,20 +391,23 @@ All copy lives in `src/data/`. Components only render it.
 `profile.bio` is an array of paragraphs; wrap a phrase in `**double asterisks**` to render it
 **bold** in the About section. The first entry is reused as the section's intro paragraph.
 
-The two illustrated dogs under the quick-facts card in the About section are inline SVG in
-`src/components/Pets.jsx`. The drawings are `aria-hidden`; the visible caption (names plus a
-one-line note) is plain text from `src/data/pets.js`, so the pair adds no image requests and
-needs no assets to maintain. Their idle motion (tail wag, blink, breathing and the two head
-turns that share an 11 s cycle) and the hover reaction are plain CSS in `Pets.module.css`:
-transform-only, no JavaScript, and disabled entirely under
-`prefers-reduced-motion: reduce`. Hovering the About section lifts the pair and perks their
-ears; hovering one dog lifts that dog a little further.
+The two illustrated dogs under the quick-facts card in the About section are retro pixel-art
+SVGs in `src/components/Pets.jsx` (the four cats below them mirror the system in
+`Cats.jsx`). Each animal is a set of character-map sprite layers — tail, body, patches,
+head, ears and eye — rendered once by `src/components/PixelPet.jsx` into merged SVG rects
+with crisp edges, recoloured per palette, standing in side view: the dogs face right, the
+cats face left, so the two groups look at each other across the row. The drawings are
+`aria-hidden`; the visible caption (names plus a one-line note) is plain text from the data
+modules, so the pets add no image requests and need no assets to maintain. Their idle life
+(tail sway, blinks, ear swings/twitches) and the excited reaction are plain CSS in
+`Pets.module.css` / `Cats.module.css`: transform-only, no JavaScript, de-phased per animal,
+and disabled entirely under `prefers-reduced-motion: reduce`.
 
-The **Say hi** button under the caption greets both dogs at once. Hovering it (or tapping it,
-where there is no hover) starts a coordinated greeting in each — faster tail wag, bouncing
-head and ears, body bounce, paw shifts and an open barking mouth — with different timings and
-phase offsets so they read as two animals rather than one mirrored animation. They settle
-back to idle when the pointer leaves, or a few seconds after a tap.
+The **Say hi** button under each caption greets the whole group at once. Hovering any pet
+(or tapping a pet or the button, where there is no hover) starts a coordinated excited
+reaction — fast tail wag, ear flaps, head bob, quick double-blinks and a little hop — with
+different timings and phase offsets so six animals never move in lockstep. They settle back
+to idle when the pointer leaves, or a few seconds after a tap.
 
 Page-level metadata (title, description, Open Graph, JSON-LD) lives in `index.html`.
 
@@ -452,6 +455,13 @@ and expands into a card with a seek bar, elapsed/total time, shuffle, repeat (of
 one), volume with mute, and the full playlist from `src/data/tracks.js`.
 
 Design and behaviour notes:
+
+- **Autoplays a random track on open** — every load or refresh picks a random song (never
+  the one that played on the previous visit, via `localStorage` under `music-last-track`).
+  Browsers only allow sound after a user gesture, so when autoplay is blocked the player
+  waits quietly: the disc pulses softly and the music starts on the visitor's first
+  click, tap or key press anywhere on the page. Interactions with the player itself are
+  excluded from that trigger, so its own controls always win.
 
 - **Themed by the design tokens** — the disc's centre label, the progress fill, the
   active playlist row and the equalizer bars all use `--accent`, so the player follows

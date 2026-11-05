@@ -19,7 +19,7 @@
 
 export const resume = {
   name: 'Kylle Ian D. Acibron',
-  role: 'Full-stack developer in training',
+  role: 'Aspiring Web Developer',
   tagline: 'Experience at a glance.',
   location: 'Bayawan City, Negros Oriental, Philippines',
   email: 'kylleacibron@gmail.com',
@@ -29,7 +29,7 @@ export const resume = {
   },
 
   summary:
-    'BS Information Technology student at Negros Oriental State University (NORSU-BSC) and full-stack developer in training. Builds practical web systems end to end — from MySQL schemas and application logic to responsive interfaces — using Django, Laravel, React, PHP and JavaScript. Current work includes an internship contributing to university web systems, a capstone dispersal tracking system for a City Veterinary Office, and portfolio projects for a pickleball facility and a hotel.',
+    'BS Information Technology student at Negros Oriental State University (NORSU-BSC) and aspiring web developer. Builds practical web systems end to end — from MySQL schemas and application logic to responsive interfaces — using Django, Laravel, React, PHP and JavaScript. Current work includes an internship contributing to university web systems, a capstone dispersal tracking system for a City Veterinary Office, and portfolio projects for a pickleball facility and a hotel.',
 
   education: {
     school: 'Negros Oriental State University – Bayawan–Sta. Catalina Campus (NORSU-BSC)',

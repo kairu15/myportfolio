@@ -11,7 +11,7 @@ export const profile = {
   name: 'Kylle Ian Acibron',
   photo,
   photoAlt: 'Portrait of Kylle Ian Acibron, wearing glasses and a dark hooded jacket',
-  role: 'Full-stack developer in training',
+  role: 'Aspiring Web Developer',
   headline: 'IT student focused on web development and practical software solutions.',
   // Rendered in the accent colour inside the headline.
   headlineAccent: 'practical software solutions',

@@ -17,6 +17,7 @@ import { tracks } from '../data/tracks.js';
 import styles from './MusicPlayer.module.css';
 
 const VOLUME_KEY = 'music-volume';
+const LAST_TRACK_KEY = 'music-last-track';
 
 /** 126.4 → "2:06". Falls back to 0:00 until the browser knows the length. */
 function formatTime(seconds) {
@@ -37,6 +38,31 @@ function readStoredVolume() {
   return 0.85;
 }
 
+function readLastTrackIndex() {
+  try {
+    const parsed = Number(localStorage.getItem(LAST_TRACK_KEY));
+    if (Number.isInteger(parsed) && parsed >= 0 && parsed < tracks.length) return parsed;
+  } catch {
+    /* storage blocked — fall through */
+  }
+  return null;
+}
+
+/**
+ * The opener: a random track on every load/refresh, skipping the one that
+ * played last visit so a refresh always brings something fresh. When storage
+ * is unavailable this degrades to a plain random pick.
+ */
+function randomStartIndex() {
+  const last = readLastTrackIndex();
+  if (Number.isInteger(last) && tracks.length > 1) {
+    let pick = Math.floor(Math.random() * (tracks.length - 1));
+    if (pick >= last) pick += 1;
+    return pick;
+  }
+  return Math.floor(Math.random() * tracks.length);
+}
+
 /**
  * Floating music player, docked bottom-right. A compact vinyl pill by default;
  * expanding it reveals seek, volume, shuffle/repeat and the playlist. It is
@@ -47,10 +73,14 @@ export default function MusicPlayer() {
   const audioRef = useRef(null);
   const frameRef = useRef(0);
   const durationsRef = useRef({});
+  const rootRef = useRef(null);
+  // Set when the browser defers autoplay; consumed by the first page gesture.
+  const pendingRef = useRef(false);
 
   const [expanded, setExpanded] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [playing, setPlaying] = useState(false);
+  const [index, setIndex] = useState(randomStartIndex);
+  const [playing, setPlaying] = useState(true); // intent: autoplay on open
+  const [awaiting, setAwaiting] = useState(false); // autoplay blocked, waiting for a gesture
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [shuffle, setShuffle] = useState(false);
@@ -121,9 +151,45 @@ export default function MusicPlayer() {
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (playing) audio.play().catch(() => setPlaying(false));
-    else audio.pause();
+    if (!playing) {
+      audio.pause();
+      return;
+    }
+    audio.play().catch((playError) => {
+      // Autoplay policy: no gesture yet. Keep the choice of track and wait
+      // for the visitor's first interaction instead of erroring out.
+      if (playError?.name === 'NotAllowedError') {
+        pendingRef.current = true;
+        setAwaiting(true);
+        setPlaying(false);
+        return;
+      }
+      // Superseded by a newer play() attempt (e.g. quick skip) — ignore.
+      if (playError?.name === 'AbortError') return;
+      setPlaying(false);
+    });
   }, [playing, index]);
+
+  // Autoplay fallback: browsers only allow sound after a user gesture, so the
+  // deferred start listens for the first pointer press or key on the page.
+  // Interactions inside the player itself are excluded — its own controls
+  // (play/pause/playlist) already speak for the visitor.
+  useEffect(() => {
+    const tryStart = (event) => {
+      if (!pendingRef.current) return;
+      if (rootRef.current && event.target instanceof Node && rootRef.current.contains(event.target)) {
+        return;
+      }
+      pendingRef.current = false;
+      setAwaiting(false);
+      setPlaying(true);
+    };
+    const gestures = ['pointerdown', 'touchstart', 'keydown'];
+    for (const type of gestures) document.addEventListener(type, tryStart, true);
+    return () => {
+      for (const type of gestures) document.removeEventListener(type, tryStart, true);
+    };
+  }, []);
 
   // Smooth progress: rAF while playing, throttled to ~10 updates a second so
   // the seek bar glides without re-rendering the playlist sixty times over.
@@ -285,7 +351,10 @@ export default function MusicPlayer() {
 
   return (
     <div
-      className={`${styles.player} ${playing ? styles.isPlaying : ''}`}
+      ref={rootRef}
+      className={`${styles.player} ${playing ? styles.isPlaying : ''} ${
+        awaiting && !playing ? styles.isWaiting : ''
+      }`}
       aria-label="Music player"
     >
       <audio
@@ -294,7 +363,16 @@ export default function MusicPlayer() {
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={handleEnded}
         onError={handleError}
-        onPlay={() => setPlaying(true)}
+        onPlay={() => {
+          pendingRef.current = false;
+          setAwaiting(false);
+          setPlaying(true);
+          try {
+            localStorage.setItem(LAST_TRACK_KEY, String(index));
+          } catch {
+            /* storage blocked — the no-repeat opener just degrades to random */
+          }
+        }}
         onPause={() => setPlaying(false)}
       />
 
@@ -488,7 +566,12 @@ export default function MusicPlayer() {
             type="button"
             className={styles.pillInfo}
             onClick={() => setExpanded(true)}
-            aria-label={`Expand player — now playing ${track.title} by ${track.artist}`}
+            aria-label={
+              awaiting
+                ? `Expand player — ready to play ${track.title} by ${track.artist}. Press play or interact with the page to start.`
+                : `Expand player — now playing ${track.title} by ${track.artist}`
+            }
+            title={awaiting ? 'Click anywhere or press play to start the music' : undefined}
           >
             <span className={styles.disc} aria-hidden="true" />
             <span className={styles.pillText}>
