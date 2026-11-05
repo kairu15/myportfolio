@@ -1,109 +1,145 @@
-/* Layout skeletons for the code-split case-study and résumé views. Their
-   shapes mirror the real page structure (top bar, hero, prose sections, sheet
-   or gallery) while the route chunk streams in, and inherit the theme tokens
-   like the rest of the site. */
+/* Loading states for the code-split case-study and résumé views: the boot
+   loader's terminal, compact. Unlike index.html's first-paint loader this
+   renders after the app bundle is live, so it can use the real design
+   tokens. Same typed-log language, same motion rules. */
+
+.loader {
+  min-height: 100dvh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.9rem;
+  padding: 1.25rem;
+  background: var(--bg);
+  font-family: var(--font-mono);
+}
+
+.term {
+  width: min(430px, calc(100vw - 40px));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg-elev);
+  overflow: hidden;
+}
 
 .bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  max-width: var(--max-width);
-  margin-inline: auto;
-  padding-block: 0.9rem;
+  gap: 0.75rem;
+  padding: 0.55rem 0.9rem;
   border-bottom: 1px solid var(--border);
 }
 
-.barBack {
-  width: 11rem;
-  height: 2.25rem;
-  flex: none;
+.termTitle {
+  color: var(--text);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
-.barMeta {
-  width: 9.5rem;
-  height: 0.7rem;
-}
-
-.article {
-  display: grid;
-  gap: clamp(1.5rem, 4vw, 2.5rem);
-  padding-block: clamp(2rem, 5vw, 3.5rem) 3rem;
-}
-
-.hero {
-  display: grid;
-  gap: 0.85rem;
-  max-width: 720px;
-}
-
-.heroEyebrow {
-  width: 9rem;
-  height: 0.7rem;
-}
-
-.heroTitle {
-  width: 100%;
-  max-width: 560px;
-  height: clamp(2rem, 5vw, 2.9rem);
-}
-
-.heroTitleShort {
-  width: 62%;
-}
-
-.heroLede {
-  width: min(480px, 90%);
-  height: 0.95rem;
-}
-
-.heroPills {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.4rem;
-}
-
-.heroPill {
-  width: 6.5rem;
-  height: 1.9rem;
-}
-
-.heroPillShort {
-  width: 4.5rem;
-}
-
-.button {
-  width: 10.5rem;
-  height: 2.6rem;
-  margin-top: 0.6rem;
+.termTag {
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--border);
   border-radius: var(--radius-pill);
+  color: var(--accent);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-/* Text prose drop: a small heading plus wrapped body lines. */
-.prose {
+.body {
   display: grid;
-  gap: 0.65rem;
-  max-width: 720px;
+  gap: 0.32rem;
+  padding: 0.95rem 1.05rem 1.05rem;
 }
 
+/* Typing reveal — --w only has to be >= a line's real character count; the
+   clip hides, never adds, so a little headroom is visually identical. */
 .line {
-  height: 0.9rem;
+  --w: 36ch;
+  width: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  white-space: nowrap;
+  animation: bl-type 0.3s steps(36, end) 0.2s forwards;
 }
 
-.lineIndent {
-  width: 94%;
+.l1 {
+  --w: 17ch;
+  animation-duration: 0.26s;
+  animation-delay: 0.05s;
+  animation-timing-function: steps(17, end);
 }
 
-.lineShort {
-  width: 68%;
+.l3 {
+  --w: 8ch;
+  animation-duration: 0.16s;
+  animation-delay: 0.62s;
+  animation-timing-function: steps(8, end);
 }
 
-/* Two-column content + summary card on wide screens, like the real layout. */
-.layout {
-  display: grid;
-  gap: clamp(1.5rem, 4vw, 2.5rem);
+@keyframes bl-type {
+  to {
+    width: var(--w);
+  }
 }
 
+.accent {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.mute {
+  color: var(--text-mute);
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.58em;
+  height: 1em;
+  margin-left: 0.14em;
+  vertical-align: text-bottom;
+  background: var(--accent);
+  animation: bl-blink 1.06s steps(2, start) infinite;
+}
+
+@keyframes bl-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.track {
+  width: 148px;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-soft);
+  overflow: hidden;
+}
+
+.thumb {
+  display: block;
+  width: 42%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  animation: bl-slide 1.15s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes bl-slide {
+  from {
+    transform: translateX(-110%);
+  }
+
+  to {
+    transform: translateX(340%);
+  }
+}
+
+/* Error card used by ViewBoundary when a route chunk fails to stream in. */
 .asideCard {
   display: grid;
   gap: 0.9rem;
@@ -114,78 +150,18 @@
   background: var(--bg-elev);
 }
 
-.asideTitle {
-  width: 40%;
-  height: 1rem;
-}
+@media (prefers-reduced-motion: reduce) {
+  .line {
+    width: var(--w);
+    animation: none;
+  }
 
-.asideRow {
-  height: 0.8rem;
-}
+  .cursor {
+    animation: none;
+  }
 
-.asideRowShort {
-  width: 75%;
-}
-
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0.8rem;
-  max-width: 720px;
-}
-
-/* The font list inside the résumé sheet skeleton. */
-.sheet {
-  display: grid;
-  gap: 1.1rem;
-  padding: clamp(1.4rem, 3vw, 2rem);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--bg-elev);
-  box-shadow: var(--shadow-sm);
-}
-
-.sheetHeader {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.sheetName {
-  width: 55%;
-  height: 1.7rem;
-}
-
-.sheetRole {
-  width: 38%;
-  height: 0.9rem;
-}
-
-.sheetContact {
-  width: 62%;
-  height: 0.7rem;
-}
-
-.sheetHeading {
-  width: 30%;
-  height: 0.85rem;
-  margin-bottom: 0.2rem;
-}
-
-.sheetRows {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.sheetRow {
-  height: 0.7rem;
-}
-
-.sheetRowShort {
-  width: 78%;
-}
-
-@media (min-width: 900px) {
-  .layout {
-    grid-template-columns: minmax(0, 1fr) minmax(230px, 280px);
+  .thumb {
+    animation: none;
+    transform: translateX(60%);
   }
 }

@@ -95,107 +95,313 @@
     </script>
   </head>
   <body>
-    <!-- Static first-paint skeleton: displayed by the browser while the JS
-         bundle downloads and parses, then cleared entirely when React mounts.
-         Pure CSS, mirrors the hero's real layout, and renders nothing at all
-         under prefers-reduced-motion (no movement, just static shapes). -->
-    <div id="root">
-      <div class="boot-skel" role="presentation" aria-hidden="true">
-        <div class="boot-copy">
-          <span class="bs bs-line" style="--w: 9rem"></span>
-          <span class="bs bs-title"></span>
-          <span class="bs bs-title" style="--w: 58%"></span>
-          <span class="bs bs-line" style="--w: 15rem"></span>
-          <div class="boot-actions">
-            <span class="bs bs-btn"></span>
-            <span class="bs bs-btn" style="--w: 7rem"></span>
-          </div>
-          <div class="boot-focus">
-            <span class="bs bs-dot"></span>
-            <span class="bs bs-dot"></span>
-            <span class="bs bs-dot"></span>
-          </div>
+    <!-- Boot loader: a tiny terminal that "boots" the portfolio while the JS
+         bundle downloads and parses. Pure HTML/CSS (no JS needed to show),
+         theme-aware via the same no-flash appearance script above, sitting
+         outside #root so React never has to clear it — the inline script below
+         dismisses it the moment React mounts. -->
+    <div id="boot-loader" aria-hidden="true">
+      <div class="bl-term">
+        <div class="bl-bar">
+          <span class="bl-title">kylle@portfolio:~</span>
+          <span class="bl-tag">boot</span>
         </div>
-        <span class="bs bs-photo"></span>
+        <div class="bl-body">
+          <p class="bl-line bl-l1"><span class="bl-accent">$</span> kylle --init</p>
+          <p class="bl-line bl-l2">
+            <span class="bl-mute">&gt;</span> resolving stack <span class="bl-mute">......</span>
+            <span class="bl-ok">ok</span>
+          </p>
+          <p class="bl-line bl-l3">
+            <span class="bl-mute">&gt;</span> mounting projects <span class="bl-mute">....</span>
+            <span class="bl-ok">ok</span>
+          </p>
+          <p class="bl-line bl-l4">
+            <span class="bl-mute">&gt;</span> waking supervisors <span class="bl-mute">...</span>
+            <span class="bl-ok">ok</span>
+          </p>
+          <p class="bl-line bl-l5">
+            <span class="bl-mute">&gt;</span> <span class="bl-accent">ready</span><span class="bl-cursor"></span>
+          </p>
+        </div>
       </div>
+      <p class="bl-name">Kylle Ian Acibron</p>
+      <p class="bl-role">aspiring web developer</p>
+      <div class="bl-track"><span class="bl-thumb"></span></div>
     </div>
 
+    <div id="root"></div>
+
     <style>
-      #root:empty {
-        /* React has mounted; never let a stray skeleton linger. */
-        display: none;
-      }
-      .boot-skel {
+      /* Boot loader — themed through --boot-* custom properties written for
+         both themes (the site's tokens.css is bundled with the JS and is not
+         available during first paint, so these mirror its values). */
+      #boot-loader {
+        --boot-bg: #fbfaf7;
+        --boot-card: #ffffff;
+        --boot-border: #e3e0d8;
+        --boot-text: #14171c;
+        --boot-mute: #67707e;
+        --boot-accent: #4f46e5;
+        --boot-ok: #15803d;
+        --boot-track: #eceae3;
+        position: fixed;
+        inset: 0;
+        z-index: 200;
         display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: center;
-        gap: clamp(2.25rem, 6vw, 3.5rem);
-        max-width: 1100px;
-        padding: clamp(3rem, 7vw, 5.5rem) clamp(1.25rem, 5vw, 2.5rem) 4rem;
-      }
-      .boot-copy {
-        display: grid;
-        gap: 1rem;
-      }
-      .bs {
-        width: var(--w, 100%);
-        border-radius: 8px;
-        background-color: var(--boot-bg);
-        background-image: linear-gradient(100deg, transparent 30%, var(--boot-shine) 46%, transparent 62%);
-        background-repeat: no-repeat;
-        background-size: 260% 100%;
-        animation: boot-sweep 2s ease-in-out infinite;
-      }
-      .bs-title {
-        height: clamp(2rem, 5.6vw, 3.2rem);
-        border-radius: 10px;
-      }
-      .bs-line { height: 0.95rem; }
-      .boot-actions {
-        display: flex;
-        gap: 0.65rem;
-        margin-top: 0.7rem;
-      }
-      .bs-btn {
-        width: 9.5rem;
-        height: 2.7rem;
-        border-radius: 999px;
-      }
-      .boot-focus {
-        display: flex;
+        place-content: center;
+        justify-items: center;
         gap: 0.9rem;
-        margin-top: 0.9rem;
+        padding: 1.25rem;
+        background: var(--boot-bg);
+        font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas,
+          'Liberation Mono', monospace;
+        transition: opacity 0.38s ease, visibility 0.38s ease;
       }
-      .bs-dot {
-        width: 4.5rem;
-        height: 0.55rem;
+
+      [data-theme='dark'] #boot-loader {
+        --boot-bg: #0c0f14;
+        --boot-card: #12161d;
+        --boot-border: #232a35;
+        --boot-text: #f0f2f6;
+        --boot-mute: #8b95a4;
+        --boot-accent: #a5b4fc;
+        --boot-ok: #4ade80;
+        --boot-track: #1c212b;
       }
-      .bs-photo {
-        width: min(300px, 34vw);
-        height: auto;
-        aspect-ratio: 1;
-        border-radius: 50%;
+
+      #boot-loader.done {
+        opacity: 0;
+        visibility: hidden;
       }
-      :root .boot-skel {
-        --boot-bg: #f3f1ec;
-        --boot-shine: rgba(255, 255, 255, 0.55);
+
+      .bl-term {
+        width: min(430px, calc(100vw - 40px));
+        border: 1px solid var(--boot-border);
+        border-radius: 14px;
+        background: var(--boot-card);
+        overflow: hidden;
       }
-      :root[data-theme='dark'] .boot-skel {
-        --boot-bg: #171c25;
-        --boot-shine: rgba(240, 242, 246, 0.07);
+
+      .bl-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.55rem 0.9rem;
+        border-bottom: 1px solid var(--boot-border);
       }
-      @keyframes boot-sweep {
-        from { background-position: -110% 0; }
-        to { background-position: 110% 0; }
+
+      .bl-title {
+        color: var(--boot-text);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
       }
-      @media (max-width: 900px) {
-        .boot-skel { grid-template-columns: 1fr; }
-        .bs-photo { display: none; }
+
+      .bl-tag {
+        padding: 0.1rem 0.5rem;
+        border: 1px solid var(--boot-border);
+        border-radius: 999px;
+        color: var(--boot-accent);
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
       }
+
+      .bl-body {
+        display: grid;
+        gap: 0.32rem;
+        padding: 0.95rem 1.05rem 1.05rem;
+      }
+
+      /* Typing: each line is clamped to its final character width and revealed
+         with steps(), one char per step. --w must equal the line's exact char
+         count so the reveal never clips or drifts. */
+      .bl-line {
+        --w: 27ch;
+        width: 0;
+        overflow: hidden;
+        color: var(--boot-text);
+        font-size: 0.8rem;
+        line-height: 1.55;
+        white-space: nowrap;
+        animation: bl-type 0.3s steps(27, end) 0.36s forwards;
+      }
+
+      .bl-l1 {
+        --w: 14ch;
+        animation-duration: 0.26s;
+        animation-delay: 0.05s;
+        animation-timing-function: steps(14, end);
+      }
+
+      .bl-l3 {
+        animation-delay: 0.68s;
+      }
+
+      .bl-l4 {
+        animation-delay: 1s;
+      }
+
+      .bl-l5 {
+        --w: 8ch;
+        animation-duration: 0.16s;
+        animation-delay: 1.32s;
+        animation-timing-function: steps(8, end);
+      }
+
+      @keyframes bl-type {
+        to {
+          width: var(--w);
+        }
+      }
+
+      .bl-accent {
+        color: var(--boot-accent);
+        font-weight: 700;
+      }
+
+      .bl-mute {
+        color: var(--boot-mute);
+      }
+
+      .bl-ok {
+        color: var(--boot-ok);
+        font-weight: 700;
+      }
+
+      .bl-cursor {
+        display: inline-block;
+        width: 0.58em;
+        height: 1em;
+        margin-left: 0.14em;
+        vertical-align: text-bottom;
+        background: var(--boot-accent);
+        animation: bl-blink 1.06s steps(2, start) infinite;
+      }
+
+      @keyframes bl-blink {
+        to {
+          visibility: hidden;
+        }
+      }
+
+      .bl-name {
+        margin: 0.35rem 0 0;
+        color: var(--boot-text);
+        font-size: 0.92rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .bl-role {
+        margin: -0.55rem 0 0;
+        color: var(--boot-mute);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+      }
+
+      .bl-track {
+        width: 148px;
+        height: 3px;
+        margin-top: 0.45rem;
+        border-radius: 999px;
+        background: var(--boot-track);
+        overflow: hidden;
+      }
+
+      .bl-thumb {
+        display: block;
+        width: 42%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--boot-accent);
+        animation: bl-slide 1.15s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes bl-slide {
+        from {
+          transform: translateX(-110%);
+        }
+
+        to {
+          transform: translateX(340%);
+        }
+      }
+
+      @media (max-width: 480px) {
+        #boot-loader {
+          gap: 0.75rem;
+        }
+
+        .bl-body {
+          padding: 0.85rem 0.9rem 0.95rem;
+        }
+
+        .bl-line {
+          font-size: 0.72rem;
+        }
+
+        .bl-name {
+          font-size: 0.84rem;
+        }
+      }
+
       @media (prefers-reduced-motion: reduce) {
-        .bs { animation: none; }
+        .bl-line {
+          width: var(--w);
+          animation: none;
+        }
+
+        .bl-cursor {
+          animation: none;
+        }
+
+        .bl-thumb {
+          animation: none;
+          transform: translateX(60%);
+        }
       }
     </style>
+
+    <!-- Dismiss the boot loader the moment React mounts. The typed log keeps a
+         short minimum display so it always finishes playing on fast loads; under
+         prefers-reduced-motion that minimum shrinks to almost nothing. -->
+    <script>
+      (function () {
+        var loader = document.getElementById('boot-loader');
+        var root = document.getElementById('root');
+        if (!loader || !root) return;
+        var startedAt = Date.now();
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var minDisplay = reduce ? 250 : 1450;
+        var dismissed = false;
+        function dismiss() {
+          if (dismissed) return;
+          dismissed = true;
+          var wait = Math.max(0, minDisplay - (Date.now() - startedAt));
+          setTimeout(function () {
+            loader.classList.add('done');
+            setTimeout(function () {
+              loader.remove();
+            }, 450);
+          }, wait);
+        }
+        if (root.childElementCount > 0) {
+          dismiss();
+          return;
+        }
+        var observer = new MutationObserver(function () {
+          if (root.childElementCount > 0) {
+            observer.disconnect();
+            dismiss();
+          }
+        });
+        observer.observe(root, { childList: true });
+      })();
+    </script>
 
     <script type="module" src="/src/main.jsx"></script>
   </body>

@@ -33,6 +33,33 @@
   color: var(--accent);
 }
 
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.4rem;
+}
+
+/* Replay affordance for the guided tour — styled like the back-to-top link. */
+.tour {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--t-fast);
+}
+
+.tour:hover {
+  color: var(--accent);
+}
+
 @media (min-width: 640px) {
   .inner {
     flex-direction: row;

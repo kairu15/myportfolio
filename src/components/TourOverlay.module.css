@@ -1,0 +1,267 @@
+/* Portfolio guided tour. One fixed layer (.tour) holds a transparent click
+   blocker, the spotlight ring — a box whose giant box-shadow dims everything
+   but the highlighted element — and the floating step card. All colours,
+   radii and motion come from the shared design tokens, so the tour follows
+   the theme and accent chosen in the appearance panel. */
+
+.tour {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+}
+
+/* The page behind the tour is inert: pointer events stop here. When no
+   spotlight exists (missing element fallback) it also provides the dim. */
+.blocker {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+}
+
+.dimmed {
+  background: rgba(8, 10, 14, 0.55);
+}
+
+/* Spotlight: a transparent box over the target; the huge spread paints the
+   dim everywhere else, the tight rings frame the target. Transforms glide
+   between steps. */
+.spot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 18px;
+  box-shadow:
+    0 0 0 1px var(--bg-elev),
+    0 0 0 3px var(--accent),
+    0 0 0 200vmax rgba(8, 10, 14, 0.6);
+  transition:
+    transform 380ms var(--ease),
+    width 380ms var(--ease),
+    height 380ms var(--ease);
+}
+
+/* --- Step card ------------------------------------------------------------ */
+
+.card {
+  position: absolute;
+  width: min(372px, calc(100vw - 24px));
+  padding: 1.05rem 1.15rem 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+/* Fallback when a target is missing: float the card centre-screen. */
+.cardCenter {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Placed by JS beside the spotlight; glides between steps. */
+.cardPlaced {
+  transform: none;
+  transition:
+    left 300ms var(--ease),
+    top 300ms var(--ease);
+}
+
+.progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+  background: var(--accent);
+  transition: width 300ms var(--ease);
+}
+
+.eyebrow {
+  margin-bottom: 0.5rem;
+  color: var(--text-mute);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.content {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.title {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.body {
+  color: var(--text-soft);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+/* Content crossfades in on every step change. */
+@media (prefers-reduced-motion: no-preference) {
+  .content {
+    animation: content-in 260ms var(--ease);
+  }
+}
+
+@keyframes content-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-top: 0.95rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.ghost {
+  padding: 0.45rem 0.4rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-mute);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color var(--t-fast);
+}
+
+.ghost:hover {
+  color: var(--text);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--bg-elev);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color var(--t-fast),
+    transform var(--t-fast);
+}
+
+.back:hover {
+  border-color: var(--text-mute);
+  transform: translateY(-1px);
+}
+
+/* The primary button reuses the shared .btn-primary; sized down for the card. */
+.card :global(.btn-primary) {
+  min-height: 40px;
+  padding: 0.55rem 1.05rem;
+  font-size: 0.85rem;
+}
+
+/* --- Welcome overlay ------------------------------------------------------- */
+
+.welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(8, 10, 14, 0.55);
+  -webkit-backdrop-filter: blur(7px) saturate(130%);
+  backdrop-filter: blur(7px) saturate(130%);
+  pointer-events: auto;
+}
+
+.welcomeCard {
+  width: min(460px, 100%);
+  padding: 1.7rem 1.7rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .welcomeCard {
+    animation: welcome-in 380ms var(--ease);
+  }
+}
+
+@keyframes welcome-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+}
+
+.welcomeTitle {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.welcomeBody {
+  margin-top: 0.7rem;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.welcomeActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+/* --- Small screens: the card anchors to the bottom, thumbs in reach -------- */
+
+@media (max-width: 639px) {
+  .card {
+    inset: auto 12px 12px 12px;
+    width: auto;
+    transform: none;
+  }
+
+  .cardPlaced {
+    transform: none;
+    transition: none;
+  }
+
+  .welcomeCard {
+    padding: 1.35rem 1.35rem 1.2rem;
+  }
+
+  .welcomeTitle {
+    font-size: 1.2rem;
+  }
+}

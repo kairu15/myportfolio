@@ -30,8 +30,9 @@ serve — including **Render**, which is the target this README documents.
 14. [Editing the content](#editing-the-content)
 15. [Navigation and appearance panel](#navigation-and-appearance-panel)
 16. [Music player](#music-player)
-17. [Accessibility and performance notes](#accessibility-and-performance-notes)
-18. [Placeholders still to replace](#placeholders-still-to-replace)
+17. [Guided tour](#guided-tour)
+18. [Accessibility and performance notes](#accessibility-and-performance-notes)
+19. [Placeholders still to replace](#placeholders-still-to-replace)
 
 ---
 
@@ -54,7 +55,8 @@ No test framework, linter or backend is included, and none is required to deploy
 
 ```
 myportfolio/
-├── index.html                 Meta tags, fonts, JSON-LD, no-flash appearance script
+├── index.html                 Meta tags, fonts, JSON-LD, no-flash appearance
+│                              script and the terminal boot loader
 ├── package.json               Scripts, dependencies, engines (Node >= 20.19)
 ├── package-lock.json          Exact dependency tree used by `npm ci`
 ├── vite.config.js             Build config: outDir dist, base '/'
@@ -82,15 +84,17 @@ myportfolio/
     │   ├── tracks.js          Music player playlist (title, artist, file)
     │   └── pets.js            Names and caption note for the two dogs
     ├── hooks/
-    │   └── useAppearance.js   Theme / accent / backdrop state + persistence
+    │   ├── useAppearance.js   Theme / accent / backdrop state + persistence
+    │   ├── useHashRoute.js    Hash routing for the case-study and résumé views
+    │   └── useTour.js         Guided-tour steps, phase state and persistence
     ├── styles/
     │   ├── tokens.css         Colours, spacing, radii, shadows, themes, accents
     │   └── base.css           Resets, shared buttons, layout helpers
     └── components/            Nav, Hero, About, Projects, Activity, Skills,
                                Experience, Contact, Footer, ThemePanel,
-                               MusicPlayer, PixelPet, Section, SocialLinks,
-                               BrandIcons, Pets, Background, PatternWaves,
-                               MicroSlats, patternTheme.js
+                               MusicPlayer, TourOverlay, PixelPet, Section,
+                               SocialLinks, BrandIcons, Pets, Background,
+                               PatternWaves, MicroSlats, patternTheme.js
                                (+ one *.module.css each)
 ```
 
@@ -485,6 +489,40 @@ Design and behaviour notes:
 To change the playlist, edit `src/data/tracks.js` and put the matching files in
 `public/music/` (kebab-case filenames keep the URLs clean). Titles and artists shown in
 the player are plain data, not ID3 tags.
+
+## Guided tour
+
+A custom guided tour (`TourOverlay.jsx` + `useTour.js`, no dependencies) introduces the
+portfolio. First-time visitors get a small welcome card — *"Welcome to my little corner of
+the web"* — with **Start the tour** and **Maybe later**. The tour itself is seven steps
+that spotlight real sections (hero → about → skills → projects → experience → GitHub
+activity → contact) in that narrative order.
+
+How it works:
+
+- **Spotlight** — the highlighted element sits inside a rounded ring whose huge
+  `box-shadow` dims the rest of the page; the ring glides between steps with transforms.
+  Tall sections are clamped to a viewport-centred window so the ring stays elegant. The
+  page is click-inert during the tour (a transparent blocker), while wheel scrolling still
+  works and the ring follows along.
+- **Step card** — a floating card near the spotlight (below, then above, then clamped
+  beside; anchored to the bottom edge on screens under 640 px) with a progress bar, a
+  `Step n of 7` eyebrow, title, copy, **Skip tour**, **Back** and **Next**/**Finish tour**.
+- **Keyboard** — Arrow keys step back/forward, Enter continues, Escape skips; focus moves
+  into the card on every step, Tab is trapped inside it, and focus returns to the control
+  that opened the tour when it ends.
+- **Replaying** — the compass button in the nav rail and the **Take the tour again** link
+  in the footer restart at Step 1 any time, no refresh needed.
+- **Memory** — `localStorage` key `tour-status` records `completed` or `skipped`, so the
+  automatic welcome shows exactly once per browser; every storage call is wrapped in
+  `try/catch` for private mode. If a target element is missing, the card falls back to the
+  centre of the screen instead of breaking.
+- **Motion** — spotlight and card transitions are transform/position-only, the step copy
+  crossfades, and everything is disabled under `prefers-reduced-motion: reduce`.
+
+The tour runs on the home view only — its targets are the same section ids the navigation
+rail links to — and never blocks the music player or the pets, which simply keep doing
+their thing behind the dim.
 
 ## Accessibility and performance notes
 

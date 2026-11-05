@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   Activity as ActivityIcon,
   Briefcase,
+  Compass,
   FolderGit2,
   Home,
   Layers,
@@ -29,7 +30,7 @@ const NAV_ITEMS = [
 
 const DESKTOP = '(min-width: 900px)';
 
-export default function Nav({ appearance }) {
+export default function Nav({ appearance, tour }) {
   const [panelOpen, setPanelOpen] = useState(false);
   const [active, setActive] = useState('home');
   // Desktop starts with the rail open (icons only); mobile starts collapsed.
@@ -189,6 +190,16 @@ export default function Nav({ appearance }) {
               data-tooltip="Appearance"
             >
               <Palette size={18} strokeWidth={1.8} aria-hidden="true" />
+            </button>
+
+            <button
+              type="button"
+              className={`icon-btn ${styles.control}`}
+              onClick={tour?.start}
+              aria-label="Take the guided tour"
+              data-tooltip="Take the tour"
+            >
+              <Compass size={18} strokeWidth={1.8} aria-hidden="true" />
             </button>
 
             <button

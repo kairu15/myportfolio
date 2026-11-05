@@ -1,11 +1,13 @@
 import { Suspense, lazy, useEffect } from 'react';
 import useAppearance from './hooks/useAppearance.js';
 import useHashRoute from './hooks/useHashRoute.js';
+import useTour from './hooks/useTour.js';
 import { caseStudies } from './data/caseStudies.js';
 import ViewBoundary from './components/ViewBoundary.jsx';
 import { CaseStudySkeleton, ResumeSkeleton } from './components/ViewSkeletons.jsx';
 import Background from './components/Background.jsx';import Nav from './components/Nav.jsx'
 ;
+import TourOverlay from './components/TourOverlay.jsx';
 import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
 import Projects from './components/Projects.jsx';
@@ -26,6 +28,7 @@ const ResumeView = lazy(() => import('./components/Resume.jsx'));
 export default function App() {
   const appearance = useAppearance();
   const route = useHashRoute();
+  const tour = useTour(route.view === 'home');
   const study =
     route.view === 'caseStudy' ? caseStudies.find((item) => item.id === route.id) : null;
   const isSubview = Boolean(study) || route.view === 'resume';
@@ -68,7 +71,7 @@ export default function App() {
         </ViewBoundary>
       ) : (
         <>
-          <Nav appearance={appearance} />
+          <Nav appearance={appearance} tour={tour} />
           <main id="main">
             <Hero />
             <About />
@@ -78,13 +81,17 @@ export default function App() {
             <Experience />
             <Contact />
           </main>
-          <Footer />
+          <Footer onTour={tour.start} />
         </>
       )}
 
       {/* Lives outside the view switch: music keeps playing while a case study
           or the résumé page is open, in the corner of every view. */}
       <MusicPlayer />
+
+      {/* The guided tour runs on the home view only — its spotlight targets
+          are the section ids the nav rail links to. */}
+      {route.view === 'home' ? <TourOverlay tour={tour} /> : null}
     </>
   );
 }
