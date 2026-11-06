@@ -65,7 +65,7 @@ export const resume = {
       meta: 'Laravel · React · MySQL · MapLibre GL · Docker · Expo',
       status: 'Capstone project · in development',
       description:
-        'A livestock and poultry dispersal tracker for a City Veterinary Office, built end to end: a Laravel REST API of roughly 115 routes backed by 666 PHPUnit tests, a React staff interface with barangay-level geo-tagging on MapLibre GL, an Expo field companion and Docker Compose stacks.',
+        'A livestock and poultry dispersal tracker for a City Veterinary Office, built end to end: a Laravel REST API of roughly 115 routes backed by 666 PHPUnit tests, a React staff interface with barangay-level geo-tagging on MapLibre GL, an Expo field companion and Docker Compose setups.',
     },
     {
       name: 'PickleSphere',

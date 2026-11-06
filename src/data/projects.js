@@ -33,7 +33,7 @@ export const projects = [
     category: 'Web apps',
     categories: ['Web apps', 'Backend systems', 'React'],
     description:
-      'A full-stack system for a City Veterinary Office in Negros Oriental that replaces paper records for livestock and poultry dispersal. It holds the beneficiary and animal registry, barangay-level geo-tags, dispersal and re-dispersal history, and role-based dashboards for administrators, veterinarians and field technicians. A separate Expo app gives field staff a mobile view.',
+      'A web-based system for a City Veterinary Office in Negros Oriental that replaces paper records for livestock and poultry dispersal. It holds the beneficiary and animal registry, barangay-level geo-tags, dispersal and re-dispersal history, and role-based dashboards for administrators, veterinarians and field technicians. A separate Expo app gives field staff a mobile view.',
     stack: ['Laravel', 'MySQL', 'React', 'Vite', 'Tailwind CSS', 'MapLibre GL', 'Expo'],
     repo: 'https://github.com/kairu15/CVO',
     demo: '',

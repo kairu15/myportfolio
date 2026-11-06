@@ -25,10 +25,10 @@ export const caseStudies = [
     number: '01',
     title: 'CVO Dispersal Tracking System',
     subtitle:
-      'A full-stack Laravel, React and Expo information system that replaces the paper records behind a City Veterinary Office’s livestock and poultry dispersal programme.',
+      'A Laravel, React and Expo information system that replaces the paper records behind a City Veterinary Office’s livestock and poultry dispersal programme.',
     year: '2026',
     status: 'Capstone project · In development',
-    role: 'Full-stack developer — Laravel API, React web interface, Expo companion app, test suites and Docker setup',
+    role: 'Web developer — Laravel API, React web interface, Expo companion app, test suites and Docker setup',
     repo: 'https://github.com/kairu15/CVO',
     demo: '',
     sections: [
@@ -36,8 +36,8 @@ export const caseStudies = [
         id: 'overview',
         title: 'Project overview',
         paragraphs: [
-          'The CVO Dispersal Tracking System is a full-stack information system built for a City Veterinary Office in Negros Oriental. It replaces the paper trail behind the office’s livestock and poultry dispersal programme with a single, searchable registry of beneficiaries, animals and dispersal events, together with the dashboards that administrators, veterinarians and field staff use to work with that data.',
-          'The codebase is organised as three clients of one Laravel API: a React web interface for office staff, an Expo mobile app for field technicians, and Docker Compose stacks that keep development and production reproducible. At the time of writing, the repository holds 49 migrations, 31 controllers, roughly 115 API routes, 24 page-level React modules and a backend test suite of 666 tests.',
+          'The CVO Dispersal Tracking System is an information system built for a City Veterinary Office in Negros Oriental. It replaces the paper trail behind the office’s livestock and poultry dispersal programme with a single, searchable registry of beneficiaries, animals and dispersal events, together with the dashboards that administrators, veterinarians and field staff use to work with that data.',
+          'The codebase is organised as three clients of one Laravel API: a React web interface for office staff, an Expo mobile app for field technicians, and Docker Compose setups that keep development and production reproducible. At the time of writing, the repository holds 49 migrations, 31 controllers, roughly 115 API routes, 24 page-level React modules and a backend test suite of 666 tests.',
         ],
       },
       {
@@ -64,7 +64,7 @@ export const caseStudies = [
         id: 'role',
         title: 'My role',
         paragraphs: [
-          'I built the system across the full stack as this capstone’s developer: the Laravel API — controllers, service classes, form requests, policies and migrations — the React web interface, the Expo companion app, the PHPUnit and Vitest suites, and the Docker Compose configuration for both development and production.',
+          'I built the entire system as this capstone’s developer: the Laravel API — controllers, service classes, form requests, policies and migrations — the React web interface, the Expo companion app, the PHPUnit and Vitest suites, and the Docker Compose configuration for both development and production.',
           'Because the requirements came from a real office and its dispersal programme, the work was shaped by field workflows rather than by a generic feature list. The repository remains under active development and is not a finished deployment.',
         ],
       },
@@ -100,7 +100,7 @@ export const caseStudies = [
               'PHPUnit — 666 tests',
               'Vitest + Testing Library',
               'oxlint',
-              'Node end-to-end scripts against the running stack',
+              'Node end-to-end scripts that run against Docker',
             ],
           },
         ],
@@ -125,7 +125,7 @@ export const caseStudies = [
         paragraphs: [
           'I started from the domain rather than the screens. Beneficiaries, animals, ownership events and dispersal events are modelled as separate entities, with barangays and puroks as first-class location records. Business rules live in service classes under app/Services, controllers stay thin, validation is handled by form requests, and responses are shaped by API resources.',
           'The React app mirrors those modules one page at a time — beneficiaries, the dispersal map, health, field visits, monitoring, reports, roles — with React Query keeping server state out of component state. Access control is enforced by API policies and reflected in the interface routes, so the UI never becomes the security boundary.',
-          'Tests were written alongside each module: 56 feature test files covering the registry, dispersal, health, field visits, reports, roles and settings, plus Vitest component tests and scripted end-to-end flows against the running Docker stack. A separate production compose file serves the built frontend through nginx and proxies /api to the API, so production runs on a single origin.',
+          'Tests were written alongside each module: 56 feature test files covering the registry, dispersal, health, field visits, reports, roles and settings, plus Vitest component tests and scripted end-to-end flows that run against Docker. A separate production compose file serves the built frontend through nginx and proxies /api to the API, so production runs on a single origin.',
         ],
       },
       {
@@ -134,7 +134,7 @@ export const caseStudies = [
         bullets: [
           {
             title: 'Cross-origin SPA sessions.',
-            text: 'Sanctum’s cookie authentication is origin-locked, and the frontend on :5173 talking to the API on :8005 produced 419 and CORS errors until VITE_API_URL, SANCTUM_STATEFUL_DOMAINS and CORS_ALLOWED_ORIGINS were kept in step. The production stack removes this class of bug entirely by serving a single origin and proxying /api.',
+            text: 'Sanctum’s cookie authentication is origin-locked, and the frontend on :5173 talking to the API on :8005 produced 419 and CORS errors until VITE_API_URL, SANCTUM_STATEFUL_DOMAINS and CORS_ALLOWED_ORIGINS were kept in step. The production setup removes this class of bug entirely by serving a single origin and proxying /api.',
           },
           {
             title: 'Tests that reached the wrong database.',
@@ -163,7 +163,7 @@ export const caseStudies = [
         title: 'Results and learnings',
         paragraphs: [
           'The repository contains a working, containerised system backed by 666 backend tests and a mobile client on the same API. The README still lists the core registry, geo-tagging and dispersal-tracking modules as in progress, alongside reporting and settings work, so the honest summary is “functional and under active development”.',
-          'Three lessons stand out: enforce permissions above the interface rather than inside it; test against an isolated database whenever the development environment carries production-shaped credentials; and design identity so programme records never double as logins. The project also reinforced that reproducible environments are a feature in their own right — the compose stack is what makes onboarding and the end-to-end scripts possible.',
+          'Three lessons stand out: enforce permissions above the interface rather than inside it; test against an isolated database whenever the development environment carries production-shaped credentials; and design identity so programme records never double as logins. The project also reinforced that reproducible environments are a feature in their own right — the Docker Compose setup is what makes onboarding and the end-to-end scripts possible.',
           'Limitations at the time of writing: the system has no public deployment and no production usage data, because the office has not rolled it out yet.',
         ],
       },
@@ -340,7 +340,7 @@ export const caseStudies = [
       'A PHP and MySQL hotel management prototype built for portfolio demonstration — guest bookings, front-desk operations and a 46-page administration panel.',
     year: '2026',
     status: 'Portfolio project · Demonstration prototype',
-    role: 'Full-stack developer — MySQL schema, PHP modules, and guest, staff and admin interfaces',
+    role: 'Web developer — MySQL schema, PHP modules, and guest, staff and admin interfaces',
     repo: 'https://github.com/kairu15/Project-Hotel-Management-System',
     demo: '',
     sections: [
